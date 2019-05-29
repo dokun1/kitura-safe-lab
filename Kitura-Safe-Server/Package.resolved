@@ -1,0 +1,196 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Cryptor",
+        "repositoryURL": "https://github.com/IBM-Swift/BlueCryptor.git",
+        "state": {
+          "branch": null,
+          "revision": "6f79b4ea0a7ef8acb08ba3f3e23da32e83acaca3",
+          "version": "1.0.28"
+        }
+      },
+      {
+        "package": "Socket",
+        "repositoryURL": "https://github.com/IBM-Swift/BlueSocket.git",
+        "state": {
+          "branch": null,
+          "revision": "ccc671b022bc60e5fffcb2aa15f499c6331bfd18",
+          "version": "1.0.46"
+        }
+      },
+      {
+        "package": "SSLService",
+        "repositoryURL": "https://github.com/IBM-Swift/BlueSSLService.git",
+        "state": {
+          "branch": null,
+          "revision": "0127cd4156bb0ba702894f2509199e4b65ca1db5",
+          "version": "1.0.46"
+        }
+      },
+      {
+        "package": "CloudEnvironment",
+        "repositoryURL": "https://github.com/IBM-Swift/CloudEnvironment.git",
+        "state": {
+          "branch": null,
+          "revision": "11fdf40bfd925c78a4d19981de13f26e5a94da84",
+          "version": "9.0.1"
+        }
+      },
+      {
+        "package": "Configuration",
+        "repositoryURL": "https://github.com/IBM-Swift/Configuration.git",
+        "state": {
+          "branch": null,
+          "revision": "1319813a098ce20bd02160d81aa59e8a9037a179",
+          "version": "3.0.3"
+        }
+      },
+      {
+        "package": "FileKit",
+        "repositoryURL": "https://github.com/IBM-Swift/FileKit.git",
+        "state": {
+          "branch": null,
+          "revision": "26911acde61a3556b7583f84180048ea6a03973c",
+          "version": "0.0.2"
+        }
+      },
+      {
+        "package": "Health",
+        "repositoryURL": "https://github.com/IBM-Swift/Health.git",
+        "state": {
+          "branch": null,
+          "revision": "dcfc99814a289a9e02e408aa609c311c3151b60d",
+          "version": "1.0.5"
+        }
+      },
+      {
+        "package": "HeliumLogger",
+        "repositoryURL": "https://github.com/IBM-Swift/HeliumLogger.git",
+        "state": {
+          "branch": null,
+          "revision": "779865e83149a59894b14950aa83f70b7e81bc27",
+          "version": "1.8.1"
+        }
+      },
+      {
+        "package": "Kitura",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura.git",
+        "state": {
+          "branch": null,
+          "revision": "f19737e885be1dbc97f146e9af3fe99fe7b67b72",
+          "version": "2.7.0"
+        }
+      },
+      {
+        "package": "Kitura-NIO",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-NIO.git",
+        "state": {
+          "branch": null,
+          "revision": "61b29ed5150c332a41470684f6f0c3e57acc3db2",
+          "version": "2.1.0"
+        }
+      },
+      {
+        "package": "KituraOpenAPI",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-OpenAPI.git",
+        "state": {
+          "branch": null,
+          "revision": "7c0f961ee9499cc0a5623cfad571bd10b8019e95",
+          "version": "1.2.1"
+        }
+      },
+      {
+        "package": "Kitura-TemplateEngine",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-TemplateEngine.git",
+        "state": {
+          "branch": null,
+          "revision": "d62d74bca48c6fb76f9fc1f48eeb2d7af415e80b",
+          "version": "2.0.1"
+        }
+      },
+      {
+        "package": "KituraWebSocket",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-WebSocket-NIO.git",
+        "state": {
+          "branch": null,
+          "revision": "84b45911a68252634573a37f00012a5c7e49336d",
+          "version": "2.0.2"
+        }
+      },
+      {
+        "package": "KituraContracts",
+        "repositoryURL": "https://github.com/IBM-Swift/KituraContracts.git",
+        "state": {
+          "branch": null,
+          "revision": "4f8237d6fe2cc1593761660dc4d0ab2c516d73eb",
+          "version": "1.1.2"
+        }
+      },
+      {
+        "package": "LoggerAPI",
+        "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
+        "state": {
+          "branch": null,
+          "revision": "e29073bb7cecf3673e56bcb16180e8fd0cb091f6",
+          "version": "1.8.1"
+        }
+      },
+      {
+        "package": "omr-agentcore",
+        "repositoryURL": "https://github.com/RuntimeTools/omr-agentcore",
+        "state": {
+          "branch": null,
+          "revision": "5a2361ba1f005596a2bfa28de76ed4acf1e71c33",
+          "version": "3.2.4-swift4"
+        }
+      },
+      {
+        "package": "CloudFoundryEnv",
+        "repositoryURL": "https://github.com/IBM-Swift/Swift-cfenv.git",
+        "state": {
+          "branch": null,
+          "revision": "b6625a49d65f83036f0e9922b7e9f2fa66cb623e",
+          "version": "6.0.3"
+        }
+      },
+      {
+        "package": "swift-nio",
+        "repositoryURL": "https://github.com/apple/swift-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "ed50f8a41ece8db20afa8d1188fc0960f95263df",
+          "version": "2.2.0"
+        }
+      },
+      {
+        "package": "swift-nio-ssl",
+        "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
+        "state": {
+          "branch": null,
+          "revision": "dc23a24fbe5d59429eacf45a9add82fdf6ab90e6",
+          "version": "2.1.0"
+        }
+      },
+      {
+        "package": "SwiftMetrics",
+        "repositoryURL": "https://github.com/RuntimeTools/SwiftMetrics.git",
+        "state": {
+          "branch": null,
+          "revision": "c96b4c5e79dc5a89916ce00b3507f54fb758186d",
+          "version": "2.6.3"
+        }
+      },
+      {
+        "package": "TypeDecoder",
+        "repositoryURL": "https://github.com/IBM-Swift/TypeDecoder.git",
+        "state": {
+          "branch": null,
+          "revision": "39bb56b3b5c8ffb1b475c529fb1cfdb64e709a02",
+          "version": "1.3.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
