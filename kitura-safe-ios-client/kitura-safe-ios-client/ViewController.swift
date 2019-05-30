@@ -15,6 +15,28 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let disasterSocketClient = DisasterSocketClient(address: "localhost:8080")
+        disasterSocketClient.delegate = self
+        disasterSocketClient.attemptConnection()
+    }
 }
 
+extension ViewController: DisasterSocketClientDelegate {
+    func statusReported(client: DisasterSocketClient, person: Person) {
+        print("")
+    }
+    
+    func clientConnected(client: DisasterSocketClient) {
+        print("")
+    }
+    
+    func clientDisconnected(client: DisasterSocketClient) {
+        print("")
+    }
+    
+    func clientErrorOccurred(client: DisasterSocketClient, error: Error) {
+        print("")
+    }
+}

@@ -6,5 +6,5 @@ target 'kitura-safe-ios-client' do
   use_frameworks!
 
   # Pods for kitura-safe-ios-client
-  pod 'Starscream', '~> 3.0.2'
+  pod 'Starscream', '~> 3.1.0'
 end

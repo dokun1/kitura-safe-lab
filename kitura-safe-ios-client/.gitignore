@@ -1,2 +1,4 @@
 Pods/
 Podfile.lock
+mykey.pem
+mykey.pub
