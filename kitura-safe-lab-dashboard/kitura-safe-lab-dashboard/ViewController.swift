@@ -23,6 +23,7 @@ class ViewController: NSViewController {
         let disasterSocketClient = DisasterSocketClient(address: "localhost:8080")
         disasterSocketClient.delegate = self
         disasterSocketClient.attemptConnection()
+        //disasterSocketClient.disasterSocket?.connect()
     }
 
     override var representedObject: Any? {

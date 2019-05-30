@@ -20,7 +20,31 @@ enum DisasterSocketError: Error {
     case badConnection
 }
 
-class DisasterSocketClient: WebSocketDelegate {
+class DisasterSocketClient: WebSocketDelegate, WebSocketAdvancedDelegate {
+    func websocketDidConnect(socket: WebSocket) {
+                print("")
+    }
+    
+    func websocketDidDisconnect(socket: WebSocket, error: Error?) {
+                print("")
+    }
+    
+    func websocketDidReceiveMessage(socket: WebSocket, text: String, response: WebSocket.WSResponse) {
+                print("")
+    }
+    
+    func websocketDidReceiveData(socket: WebSocket, data: Data, response: WebSocket.WSResponse) {
+                print("")
+    }
+    
+    func websocketHttpUpgrade(socket: WebSocket, request: String) {
+        print("")
+    }
+    
+    func websocketHttpUpgrade(socket: WebSocket, response: String) {
+        print("")
+    }
+    
     func websocketDidConnect(socket: WebSocketClient) {
         delegate?.clientConnected(client: self)
     }
@@ -39,21 +63,22 @@ class DisasterSocketClient: WebSocketDelegate {
     
     weak var delegate: DisasterSocketClientDelegate?
     var address: String
-    var socket: WebSocket?
+    public var disasterSocket: WebSocket?
     
     init(address: String) {
         self.address = address
     }
     
     public func attemptConnection() {
-        guard let url = URL(string: "ws://\(self.address)/") else {
+        guard let url = URL(string: "ws://\(self.address)/disaster") else {
             delegate?.clientErrorOccurred(client: self, error: DisasterSocketError.badConnection)
             return
         }
-        let socket = WebSocket(url: url, protocols: ["disaster"])
+        let socket = WebSocket(url: url)
         socket.delegate = self
-        self.socket = socket
-        self.socket?.connect()
-        
+        socket.advancedDelegate = self
+        socket.disableSSLCertValidation = true
+        disasterSocket = socket
+        disasterSocket?.connect()
     }
 }
