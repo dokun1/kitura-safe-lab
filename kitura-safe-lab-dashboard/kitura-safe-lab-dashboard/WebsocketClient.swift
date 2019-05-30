@@ -39,18 +39,21 @@ class DisasterSocketClient: WebSocketDelegate {
     
     weak var delegate: DisasterSocketClientDelegate?
     var address: String
+    var socket: WebSocket?
     
     init(address: String) {
         self.address = address
     }
     
     public func attemptConnection() {
-        guard let url = URL(string: "ws://\(self.address)/disaster") else {
+        guard let url = URL(string: "ws://\(self.address)/") else {
             delegate?.clientErrorOccurred(client: self, error: DisasterSocketError.badConnection)
             return
         }
-        let socket = WebSocket(url: url)
+        let socket = WebSocket(url: url, protocols: ["disaster"])
         socket.delegate = self
-        socket.connect()
+        self.socket = socket
+        self.socket?.connect()
+        
     }
 }

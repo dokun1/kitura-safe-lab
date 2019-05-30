@@ -1,0 +1,417 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		539AC8B722A053160055B1E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC8B622A053160055B1E0 /* AppDelegate.swift */; };
+		539AC8B922A053160055B1E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC8B822A053160055B1E0 /* ViewController.swift */; };
+		539AC8BC22A053160055B1E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539AC8BA22A053160055B1E0 /* Main.storyboard */; };
+		539AC8BE22A053180055B1E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 539AC8BD22A053180055B1E0 /* Assets.xcassets */; };
+		539AC8C122A053180055B1E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539AC8BF22A053180055B1E0 /* LaunchScreen.storyboard */; };
+		6D114C130C8347B9F5F56BE8 /* Pods_kitura_safe_ios_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33F6E59CE2B58DF7B1351C77 /* Pods_kitura_safe_ios_client.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		33F6E59CE2B58DF7B1351C77 /* Pods_kitura_safe_ios_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kitura_safe_ios_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		539AC8B322A053160055B1E0 /* kitura-safe-ios-client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kitura-safe-ios-client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		539AC8B622A053160055B1E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		539AC8B822A053160055B1E0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		539AC8BB22A053160055B1E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		539AC8BD22A053180055B1E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		539AC8C022A053180055B1E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		539AC8C222A053180055B1E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB2599282FB76FD0FD87F7F0 /* Pods-kitura-safe-ios-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kitura-safe-ios-client.debug.xcconfig"; path = "Target Support Files/Pods-kitura-safe-ios-client/Pods-kitura-safe-ios-client.debug.xcconfig"; sourceTree = "<group>"; };
+		E8FB29D91F5118EAE077F0EC /* Pods-kitura-safe-ios-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kitura-safe-ios-client.release.xcconfig"; path = "Target Support Files/Pods-kitura-safe-ios-client/Pods-kitura-safe-ios-client.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		539AC8B022A053160055B1E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D114C130C8347B9F5F56BE8 /* Pods_kitura_safe_ios_client.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		539AC8AA22A053160055B1E0 = {
+			isa = PBXGroup;
+			children = (
+				539AC8B522A053160055B1E0 /* kitura-safe-ios-client */,
+				539AC8B422A053160055B1E0 /* Products */,
+				68FDADE74DE4CE7B76A78784 /* Pods */,
+				C05BE6EBB073F8D0F2ABC02E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		539AC8B422A053160055B1E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				539AC8B322A053160055B1E0 /* kitura-safe-ios-client.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		539AC8B522A053160055B1E0 /* kitura-safe-ios-client */ = {
+			isa = PBXGroup;
+			children = (
+				539AC8B622A053160055B1E0 /* AppDelegate.swift */,
+				539AC8B822A053160055B1E0 /* ViewController.swift */,
+				539AC8BA22A053160055B1E0 /* Main.storyboard */,
+				539AC8BD22A053180055B1E0 /* Assets.xcassets */,
+				539AC8BF22A053180055B1E0 /* LaunchScreen.storyboard */,
+				539AC8C222A053180055B1E0 /* Info.plist */,
+			);
+			path = "kitura-safe-ios-client";
+			sourceTree = "<group>";
+		};
+		68FDADE74DE4CE7B76A78784 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AB2599282FB76FD0FD87F7F0 /* Pods-kitura-safe-ios-client.debug.xcconfig */,
+				E8FB29D91F5118EAE077F0EC /* Pods-kitura-safe-ios-client.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C05BE6EBB073F8D0F2ABC02E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33F6E59CE2B58DF7B1351C77 /* Pods_kitura_safe_ios_client.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		539AC8B222A053160055B1E0 /* kitura-safe-ios-client */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 539AC8C522A053180055B1E0 /* Build configuration list for PBXNativeTarget "kitura-safe-ios-client" */;
+			buildPhases = (
+				BD6C61FD715891723B962ABA /* [CP] Check Pods Manifest.lock */,
+				539AC8AF22A053160055B1E0 /* Sources */,
+				539AC8B022A053160055B1E0 /* Frameworks */,
+				539AC8B122A053160055B1E0 /* Resources */,
+				840E4294CCE9A2D3742A6DB7 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "kitura-safe-ios-client";
+			productName = "kitura-safe-ios-client";
+			productReference = 539AC8B322A053160055B1E0 /* kitura-safe-ios-client.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		539AC8AB22A053160055B1E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "David Okun";
+				TargetAttributes = {
+					539AC8B222A053160055B1E0 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 539AC8AE22A053160055B1E0 /* Build configuration list for PBXProject "kitura-safe-ios-client" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 539AC8AA22A053160055B1E0;
+			productRefGroup = 539AC8B422A053160055B1E0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				539AC8B222A053160055B1E0 /* kitura-safe-ios-client */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		539AC8B122A053160055B1E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				539AC8C122A053180055B1E0 /* LaunchScreen.storyboard in Resources */,
+				539AC8BE22A053180055B1E0 /* Assets.xcassets in Resources */,
+				539AC8BC22A053160055B1E0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		840E4294CCE9A2D3742A6DB7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-kitura-safe-ios-client/Pods-kitura-safe-ios-client-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-kitura-safe-ios-client/Pods-kitura-safe-ios-client-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD6C61FD715891723B962ABA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-kitura-safe-ios-client-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		539AC8AF22A053160055B1E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				539AC8B922A053160055B1E0 /* ViewController.swift in Sources */,
+				539AC8B722A053160055B1E0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		539AC8BA22A053160055B1E0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				539AC8BB22A053160055B1E0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		539AC8BF22A053180055B1E0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				539AC8C022A053180055B1E0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		539AC8C322A053180055B1E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		539AC8C422A053180055B1E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		539AC8C622A053180055B1E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB2599282FB76FD0FD87F7F0 /* Pods-kitura-safe-ios-client.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RQ632LL2X3;
+				INFOPLIST_FILE = "kitura-safe-ios-client/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.okun.io.kitura-safe-ios-client";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		539AC8C722A053180055B1E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8FB29D91F5118EAE077F0EC /* Pods-kitura-safe-ios-client.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RQ632LL2X3;
+				INFOPLIST_FILE = "kitura-safe-ios-client/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.okun.io.kitura-safe-ios-client";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		539AC8AE22A053160055B1E0 /* Build configuration list for PBXProject "kitura-safe-ios-client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				539AC8C322A053180055B1E0 /* Debug */,
+				539AC8C422A053180055B1E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		539AC8C522A053180055B1E0 /* Build configuration list for PBXNativeTarget "kitura-safe-ios-client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				539AC8C622A053180055B1E0 /* Debug */,
+				539AC8C722A053180055B1E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 539AC8AB22A053160055B1E0 /* Project object */;
+}
