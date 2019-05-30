@@ -11,6 +11,7 @@ import Starscream
 import MapKit
 
 class ViewController: NSViewController {
+    var client = DisasterSocketClient(address: "localhost:8080")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +21,8 @@ class ViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        let disasterSocketClient = DisasterSocketClient(address: "localhost:8080")
-        disasterSocketClient.delegate = self
-        disasterSocketClient.attemptConnection()
+        client.delegate = self
+        client.attemptConnection()
         //disasterSocketClient.disasterSocket?.connect()
     }
 
@@ -39,7 +39,7 @@ extension ViewController: DisasterSocketClientDelegate {
     }
     
     func clientConnected(client: DisasterSocketClient) {
-        print("")
+        client.disconnect()
     }
     
     func clientDisconnected(client: DisasterSocketClient) {

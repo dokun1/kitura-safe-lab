@@ -12,10 +12,11 @@ import LoggerAPI
 class DisasterSocketService: WebSocketService {
     func connected(connection: WebSocketConnection) {
         Log.info("connection established: \(connection)")
-        // include logic to add to correct connection array
+        allConnections.append(connection)
     }
     
     func disconnected(connection: WebSocketConnection, reason: WebSocketCloseReasonCode) {
+        allConnections.removeAll { $0.id == connection.id }
         Log.info("Connection dropped for \(connection.id), reason: \(reason)")
     }
     
@@ -26,7 +27,7 @@ class DisasterSocketService: WebSocketService {
     func received(message: String, from: WebSocketConnection) {
         Log.info("string message received: \(message)")
     }
-    
+    private var allConnections = [WebSocketConnection]()
     private var dashboardConnection = [WebSocketConnection]()
     private var clientConnections = [Person: WebSocketConnection]()
 }

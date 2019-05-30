@@ -20,31 +20,7 @@ enum DisasterSocketError: Error {
     case badConnection
 }
 
-class DisasterSocketClient: WebSocketDelegate, WebSocketAdvancedDelegate {
-    func websocketDidConnect(socket: WebSocket) {
-                print("")
-    }
-    
-    func websocketDidDisconnect(socket: WebSocket, error: Error?) {
-                print("")
-    }
-    
-    func websocketDidReceiveMessage(socket: WebSocket, text: String, response: WebSocket.WSResponse) {
-                print("")
-    }
-    
-    func websocketDidReceiveData(socket: WebSocket, data: Data, response: WebSocket.WSResponse) {
-                print("")
-    }
-    
-    func websocketHttpUpgrade(socket: WebSocket, request: String) {
-        print("")
-    }
-    
-    func websocketHttpUpgrade(socket: WebSocket, response: String) {
-        print("")
-    }
-    
+class DisasterSocketClient: WebSocketDelegate {
     func websocketDidConnect(socket: WebSocketClient) {
         delegate?.clientConnected(client: self)
     }
@@ -69,6 +45,10 @@ class DisasterSocketClient: WebSocketDelegate, WebSocketAdvancedDelegate {
         self.address = address
     }
     
+    public func disconnect() {
+        disasterSocket?.disconnect()
+    }
+    
     public func attemptConnection() {
         guard let url = URL(string: "ws://\(self.address)/disaster") else {
             delegate?.clientErrorOccurred(client: self, error: DisasterSocketError.badConnection)
@@ -76,8 +56,6 @@ class DisasterSocketClient: WebSocketDelegate, WebSocketAdvancedDelegate {
         }
         let socket = WebSocket(url: url)
         socket.delegate = self
-        socket.advancedDelegate = self
-        socket.disableSSLCertValidation = true
         disasterSocket = socket
         disasterSocket?.connect()
     }
