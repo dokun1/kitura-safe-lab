@@ -23,5 +23,16 @@ struct Person: Codable, Hashable {
     var latitude: Double
     var longitude: Double
     var name: String
+    var id: String
     var status: Safety
+}
+
+struct Disaster: Codable {
+    var latitude: Double
+    var longitude: Double
+    var name: String
+}
+
+struct Another: Codable {
+    
 }

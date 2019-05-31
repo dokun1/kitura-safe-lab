@@ -14,6 +14,7 @@ protocol DisasterSocketClientDelegate: class {
     func clientConnected(client: DisasterSocketClient)
     func clientDisconnected(client: DisasterSocketClient)
     func clientErrorOccurred(client: DisasterSocketClient, error: Error)
+    func clientReceivedID(client: DisasterSocketClient, id: String)
 }
 
 enum DisasterSocketError: Error {
@@ -31,18 +32,50 @@ class DisasterSocketClient: WebSocketDelegate {
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("websocket message received: \(text)")
+        parse(text)
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("websocket message received: \(String(describing: String(data: data, encoding: .utf8)))")
     }
     
+    private func parse(_ message: String) {
+        let components = message.components(separatedBy: "=")
+        if components.first == "ID" {
+            guard let id = components.last else {
+                return
+            }
+            delegate?.clientReceivedID(client: self, id: id)
+        }
+    }
+    
     weak var delegate: DisasterSocketClientDelegate?
     var address: String
-    var socket: WebSocket?
+    var person: Person?
+    public var disasterSocket: WebSocket?
     
     init(address: String) {
         self.address = address
+    }
+    
+    public func confirmPhone(with person: Person) {
+        do {
+            try disasterSocket?.write(data: JSONEncoder().encode(person))
+        } catch let error {
+            delegate?.clientErrorOccurred(client: self, error: error)
+        }
+    }
+    
+    public func simulateDisaster(_ disaster: Disaster) {
+        do {
+            try disasterSocket?.write(data: JSONEncoder().encode(disaster))
+        } catch let error {
+            delegate?.clientErrorOccurred(client: self, error: error)
+        }
+    }
+    
+    public func disconnect() {
+        disasterSocket?.disconnect()
     }
     
     public func attemptConnection() {
@@ -52,7 +85,7 @@ class DisasterSocketClient: WebSocketDelegate {
         }
         let socket = WebSocket(url: url)
         socket.delegate = self
-        self.socket = socket
-        self.socket?.connect()
+        disasterSocket = socket
+        disasterSocket?.connect()
     }
 }

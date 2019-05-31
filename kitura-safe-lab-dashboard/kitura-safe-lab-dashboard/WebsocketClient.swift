@@ -31,18 +31,49 @@ class DisasterSocketClient: WebSocketDelegate {
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("websocket message received: \(text)")
+        parse(text)
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("websocket message received: \(String(describing: String(data: data, encoding: .utf8)))")
+        do {
+            let person = try JSONDecoder().decode(Person.self, from: data)
+            delegate?.statusReported(client: self, person: person)
+        } catch let error {
+            delegate?.clientErrorOccurred(client: self, error: error)
+        }
+    }
+    
+    private func parse(_ message: String) {
+        let components = message.components(separatedBy: "=")
+        if components.first == "ID" {
+            guard let id = components.last else {
+                return
+            }
+            confirmDashboard(with: id)
+        }
     }
     
     weak var delegate: DisasterSocketClientDelegate?
     var address: String
+    var id: String?
     public var disasterSocket: WebSocket?
     
     init(address: String) {
         self.address = address
+    }
+    
+    public func confirmDashboard(with id: String) {
+        self.id = id
+        disasterSocket?.write(string: "CONFIRMDASHBOARD=\(id)")
+    }
+    
+    public func simulateDisaster(_ disaster: Disaster) {
+        do {
+            try disasterSocket?.write(data: JSONEncoder().encode(disaster))
+        } catch let error {
+            delegate?.clientErrorOccurred(client: self, error: error)
+        }
     }
     
     public func disconnect() {

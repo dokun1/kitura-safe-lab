@@ -710,30 +710,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Rj9-b6-wug">
+                            <mapView mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rj9-b6-wug">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                             </mapView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KmC-YA-TbE">
                                 <rect key="frame" x="14" y="13" width="94" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="82" id="H9k-KY-0si"/>
-                                    <constraint firstAttribute="height" constant="21" id="rds-KR-dq1"/>
+                                    <constraint firstAttribute="width" constant="82" id="FNQ-gr-3eM"/>
+                                    <constraint firstAttribute="height" constant="21" id="WVm-zv-Aa6"/>
                                 </constraints>
                                 <buttonCell key="cell" type="push" title="Disaster!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e1N-BJ-WQX">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="simulateDisasterWithTarget:" target="XfG-lQ-9wD" id="Mxs-Vk-gYG"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w4C-wa-GwC">
+                                <rect key="frame" x="14" y="46" width="94" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="Q59-HA-vmG"/>
+                                    <constraint firstAttribute="height" constant="21" id="cWP-RO-c7h"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iXi-KE-ZFh">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="connectDashboardWithTarget:" target="XfG-lQ-9wD" id="2Cv-nD-FlX"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="w4C-wa-GwC" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="4QN-Pb-Ce3"/>
                             <constraint firstItem="Rj9-b6-wug" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="E0c-mN-5xx"/>
+                            <constraint firstAttribute="bottom" secondItem="KmC-YA-TbE" secondAttribute="bottom" constant="20" id="H7Z-nV-ZbD"/>
                             <constraint firstAttribute="trailing" secondItem="Rj9-b6-wug" secondAttribute="trailing" id="gHj-xX-n9U"/>
                             <constraint firstAttribute="bottom" secondItem="Rj9-b6-wug" secondAttribute="bottom" id="mB0-zY-mv3"/>
-                            <constraint firstAttribute="bottom" secondItem="KmC-YA-TbE" secondAttribute="bottom" constant="20" id="nDs-F8-p4g"/>
-                            <constraint firstItem="KmC-YA-TbE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="pfx-Kb-E57"/>
+                            <constraint firstItem="KmC-YA-TbE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="pm7-Wl-w3x"/>
                             <constraint firstItem="Rj9-b6-wug" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="xO6-nU-I7F"/>
+                            <constraint firstItem="KmC-YA-TbE" firstAttribute="top" secondItem="w4C-wa-GwC" secondAttribute="bottom" constant="12" id="z6I-CT-lcR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="Rj9-b6-wug" id="l9w-7y-ib3"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import MapKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var mapView: MKMapView?
+    var locationManager: LocationManager?
+    var lastLocation: CLLocationCoordinate2D?
+    var client = DisasterSocketClient(address: "localhost:8080")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,13 +22,36 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let disasterSocketClient = DisasterSocketClient(address: "localhost:8080")
-        disasterSocketClient.delegate = self
-        disasterSocketClient.attemptConnection()
+        client.delegate = self
+        locationManager = LocationManager()
+        locationManager?.delegate = self
+    }
+}
+
+extension ViewController: LocationManagerDelegate {
+    func manager(_ manager: LocationManager, didReceiveFirst location: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+        let region = MKCoordinateRegion(center: location, span: span)
+        self.mapView?.setRegion(region, animated: true)
+        lastLocation = location
+    }
+}
+
+extension ViewController { //IBActions
+    @IBAction func connect(target: Any) {
+        client.attemptConnection()
     }
 }
 
 extension ViewController: DisasterSocketClientDelegate {
+    func clientReceivedID(client: DisasterSocketClient, id: String) {
+        guard let currentLocation = locationManager?.lastLoggedLocation?.coordinate else {
+            return
+        }
+        let person = Person(latitude: currentLocation.latitude, longitude: currentLocation.longitude, name: "David", id: id, status: .unreported)
+        client.confirmPhone(with: person)
+    }
+    
     func statusReported(client: DisasterSocketClient, person: Person) {
         print("")
     }

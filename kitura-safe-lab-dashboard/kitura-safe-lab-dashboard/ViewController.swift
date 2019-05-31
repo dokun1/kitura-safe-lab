@@ -12,18 +12,12 @@ import MapKit
 
 class ViewController: NSViewController {
     var client = DisasterSocketClient(address: "localhost:8080")
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    @IBOutlet weak var mapView: MKMapView?
     
     override func viewDidAppear() {
         super.viewDidAppear()
         client.delegate = self
-        client.attemptConnection()
-        //disasterSocketClient.disasterSocket?.connect()
+        
     }
 
     override var representedObject: Any? {
@@ -33,13 +27,50 @@ class ViewController: NSViewController {
     }
 }
 
+extension ViewController { //IBActions
+    @IBAction func connectDashboard(target: Any) {
+        client.attemptConnection()
+    }
+    
+    @IBAction func simulateDisaster(target: Any) {
+        guard let location = mapView?.userLocation.coordinate else {
+            return
+        }
+        let disaster = Disaster(latitude: location.latitude, longitude: location.longitude, name: "Earthquake")
+        client.simulateDisaster(disaster)
+    }
+}
+
+extension ViewController: MKMapViewDelegate {
+    
+}
+
+class PersonAnnotation: NSObject, MKAnnotation {
+    init(coordinate: CLLocationCoordinate2D, person: Person) {
+        self.coordinate = coordinate
+        self.person = person
+    }
+    var coordinate: CLLocationCoordinate2D
+    var person: Person?
+}
+
 extension ViewController: DisasterSocketClientDelegate {
     func statusReported(client: DisasterSocketClient, person: Person) {
-        print("")
+        let coordinate = CLLocationCoordinate2D(latitude: person.latitude, longitude: person.longitude)
+        let annotation = PersonAnnotation(coordinate: coordinate, person: person)
+        DispatchQueue.main.async {
+            self.mapView?.showAnnotations([annotation], animated: true)
+//            self.mapView?.addAnnotation(annotation)
+        }
     }
     
     func clientConnected(client: DisasterSocketClient) {
-        client.disconnect()
+        guard let currentLocation = mapView?.userLocation else {
+            return
+        }
+        let span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+        let region = MKCoordinateRegion(center: currentLocation.coordinate, span: span)
+        self.mapView?.setRegion(region, animated: true)
     }
     
     func clientDisconnected(client: DisasterSocketClient) {

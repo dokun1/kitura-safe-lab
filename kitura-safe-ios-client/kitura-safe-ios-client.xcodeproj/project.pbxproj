@@ -14,6 +14,7 @@
 		539AC8C122A053180055B1E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539AC8BF22A053180055B1E0 /* LaunchScreen.storyboard */; };
 		539AC8C922A053AF0055B1E0 /* DisasterSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC8C822A053AF0055B1E0 /* DisasterSocketClient.swift */; };
 		539AC8CB22A053C20055B1E0 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC8CA22A053C20055B1E0 /* Person.swift */; };
+		539AC8CF22A0ABA10055B1E0 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC8CE22A0ABA10055B1E0 /* LocationManager.swift */; };
 		6D114C130C8347B9F5F56BE8 /* Pods_kitura_safe_ios_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33F6E59CE2B58DF7B1351C77 /* Pods_kitura_safe_ios_client.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		539AC8C222A053180055B1E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		539AC8C822A053AF0055B1E0 /* DisasterSocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisasterSocketClient.swift; sourceTree = "<group>"; };
 		539AC8CA22A053C20055B1E0 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = "../../Kitura-Safe-Server/Sources/Application/Model/Person.swift"; sourceTree = "<group>"; };
+		539AC8CE22A0ABA10055B1E0 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		AB2599282FB76FD0FD87F7F0 /* Pods-kitura-safe-ios-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kitura-safe-ios-client.debug.xcconfig"; path = "Target Support Files/Pods-kitura-safe-ios-client/Pods-kitura-safe-ios-client.debug.xcconfig"; sourceTree = "<group>"; };
 		E8FB29D91F5118EAE077F0EC /* Pods-kitura-safe-ios-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kitura-safe-ios-client.release.xcconfig"; path = "Target Support Files/Pods-kitura-safe-ios-client/Pods-kitura-safe-ios-client.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 			children = (
 				539AC8B622A053160055B1E0 /* AppDelegate.swift */,
 				539AC8B822A053160055B1E0 /* ViewController.swift */,
+				539AC8CE22A0ABA10055B1E0 /* LocationManager.swift */,
 				539AC8C822A053AF0055B1E0 /* DisasterSocketClient.swift */,
 				539AC8CA22A053C20055B1E0 /* Person.swift */,
 				539AC8BA22A053160055B1E0 /* Main.storyboard */,
@@ -216,6 +219,7 @@
 			files = (
 				539AC8B922A053160055B1E0 /* ViewController.swift in Sources */,
 				539AC8C922A053AF0055B1E0 /* DisasterSocketClient.swift in Sources */,
+				539AC8CF22A0ABA10055B1E0 /* LocationManager.swift in Sources */,
 				539AC8CB22A053C20055B1E0 /* Person.swift in Sources */,
 				539AC8B722A053160055B1E0 /* AppDelegate.swift in Sources */,
 			);
