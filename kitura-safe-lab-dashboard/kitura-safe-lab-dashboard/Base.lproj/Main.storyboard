@@ -755,11 +755,75 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="Rj9-b6-wug" id="l9w-7y-ib3"/>
+                        <segue destination="gXo-DE-KTM" kind="sheet" identifier="DisasterNameSegue" id="BDR-1i-vn1"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="655"/>
+        </scene>
+        <!--Disaster Segue Confirmation View Controller-->
+        <scene sceneID="4OX-sw-ESE">
+            <objects>
+                <viewController id="gXo-DE-KTM" customClass="DisasterSegueConfirmationViewController" customModule="kitura_safe_lab_dashboard" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="0Xk-JI-cM6">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="142"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6aG-rN-V4Q">
+                                <rect key="frame" x="26" y="60" width="398" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="e0r-x6-Erk">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2do-J7-tlO">
+                                <rect key="frame" x="64" y="13" width="323" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="311" id="Stc-bf-vM0"/>
+                                    <constraint firstAttribute="height" constant="21" id="ZE8-MT-5sh"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Confirm" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mcU-Mi-bZi">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="confirmWithTarget:" target="gXo-DE-KTM" id="sVQ-cZ-BPU"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ABT-4D-zuH">
+                                <rect key="frame" x="67" y="105" width="315" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="uzI-iK-bcx"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="What happened?" id="Og8-ka-Kxw">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ABT-4D-zuH" secondAttribute="trailing" constant="70" id="EIR-36-F1Y"/>
+                            <constraint firstItem="ABT-4D-zuH" firstAttribute="leading" secondItem="0Xk-JI-cM6" secondAttribute="leading" constant="69" id="I5U-pk-uWh"/>
+                            <constraint firstItem="2do-J7-tlO" firstAttribute="centerX" secondItem="0Xk-JI-cM6" secondAttribute="centerX" id="KUT-1x-D7s"/>
+                            <constraint firstItem="6aG-rN-V4Q" firstAttribute="centerY" secondItem="0Xk-JI-cM6" secondAttribute="centerY" id="QJ8-We-hzv"/>
+                            <constraint firstItem="6aG-rN-V4Q" firstAttribute="top" secondItem="ABT-4D-zuH" secondAttribute="bottom" constant="23" id="R89-zj-huQ"/>
+                            <constraint firstItem="6aG-rN-V4Q" firstAttribute="leading" secondItem="0Xk-JI-cM6" secondAttribute="leading" constant="26" id="U0Z-lX-cUV"/>
+                            <constraint firstItem="ABT-4D-zuH" firstAttribute="top" secondItem="0Xk-JI-cM6" secondAttribute="top" constant="20" id="WPw-ij-H0I"/>
+                            <constraint firstAttribute="bottom" secondItem="2do-J7-tlO" secondAttribute="bottom" constant="20" id="ZN2-el-tgQ"/>
+                            <constraint firstAttribute="trailing" secondItem="6aG-rN-V4Q" secondAttribute="trailing" constant="26" id="hGu-Mn-Rij"/>
+                            <constraint firstItem="6aG-rN-V4Q" firstAttribute="centerX" secondItem="0Xk-JI-cM6" secondAttribute="centerX" id="mpn-nA-mmB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textField" destination="6aG-rN-V4Q" id="F8C-my-N84"/>
+                    </connections>
+                </viewController>
+                <customObject id="cbx-aC-EpF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="694" y="655"/>
         </scene>
     </scenes>
 </document>

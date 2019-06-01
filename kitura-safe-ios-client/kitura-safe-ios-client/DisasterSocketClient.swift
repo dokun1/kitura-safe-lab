@@ -15,6 +15,7 @@ protocol DisasterSocketClientDelegate: class {
     func clientDisconnected(client: DisasterSocketClient)
     func clientErrorOccurred(client: DisasterSocketClient, error: Error)
     func clientReceivedID(client: DisasterSocketClient, id: String)
+    func clientReceivedDisaster(client: DisasterSocketClient, disaster: Disaster)
 }
 
 enum DisasterSocketError: Error {
@@ -37,6 +38,14 @@ class DisasterSocketClient: WebSocketDelegate {
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("websocket message received: \(String(describing: String(data: data, encoding: .utf8)))")
+        parse(data)
+    }
+    
+    private func parse(_ data: Data) {
+        if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
+            print("disaster reported: \(disaster.name)")
+            delegate?.clientReceivedDisaster(client: self, disaster: disaster)
+        }
     }
     
     private func parse(_ message: String) {
@@ -58,17 +67,9 @@ class DisasterSocketClient: WebSocketDelegate {
         self.address = address
     }
     
-    public func confirmPhone(with person: Person) {
+    public func reportStatus(for person: Person) {
         do {
-            try disasterSocket?.write(data: JSONEncoder().encode(person))
-        } catch let error {
-            delegate?.clientErrorOccurred(client: self, error: error)
-        }
-    }
-    
-    public func simulateDisaster(_ disaster: Disaster) {
-        do {
-            try disasterSocket?.write(data: JSONEncoder().encode(disaster))
+            disasterSocket?.write(data: try JSONEncoder().encode(person))
         } catch let error {
             delegate?.clientErrorOccurred(client: self, error: error)
         }

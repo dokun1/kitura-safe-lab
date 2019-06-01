@@ -19,20 +19,28 @@ enum Safety: String, Codable {
     case unsafe
 }
 
-struct Person: Codable, Hashable {
+struct Coordinate: Codable, Hashable {
     var latitude: Double
     var longitude: Double
+}
+
+struct Person: Codable, Hashable {
+    static func == (lhs: Person, rhs: Person) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    var coordinate: Coordinate
     var name: String
     var id: String
     var status: Safety
 }
 
 struct Disaster: Codable {
-    var latitude: Double
-    var longitude: Double
+    var coordinate: Coordinate
     var name: String
 }
 
-struct Another: Codable {
-    
+struct Dashboard: Codable {
+    var coordinate: Coordinate
+    var dashboardID: String
 }

@@ -33,16 +33,8 @@ extension ViewController { //IBActions
     }
     
     @IBAction func simulateDisaster(target: Any) {
-        guard let location = mapView?.userLocation.coordinate else {
-            return
-        }
-        let disaster = Disaster(latitude: location.latitude, longitude: location.longitude, name: "Earthquake")
-        client.simulateDisaster(disaster)
+        performSegue(withIdentifier: "DisasterNameSegue", sender: nil)
     }
-}
-
-extension ViewController: MKMapViewDelegate {
-    
 }
 
 class PersonAnnotation: NSObject, MKAnnotation {
@@ -56,7 +48,7 @@ class PersonAnnotation: NSObject, MKAnnotation {
 
 extension ViewController: DisasterSocketClientDelegate {
     func statusReported(client: DisasterSocketClient, person: Person) {
-        let coordinate = CLLocationCoordinate2D(latitude: person.latitude, longitude: person.longitude)
+        let coordinate = CLLocationCoordinate2D(latitude: person.coordinate.latitude, longitude: person.coordinate.longitude)
         let annotation = PersonAnnotation(coordinate: coordinate, person: person)
         DispatchQueue.main.async {
             self.mapView?.showAnnotations([annotation], animated: true)
@@ -79,5 +71,31 @@ extension ViewController: DisasterSocketClientDelegate {
     
     func clientErrorOccurred(client: DisasterSocketClient, error: Error) {
         print("")
+    }
+    
+    func clientReceivedRegistrationID(client: DisasterSocketClient, id: String) {
+        guard let currentLocation = mapView?.userLocation.coordinate else {
+            return
+        }
+        let dashboard = Dashboard(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), dashboardID: id)
+        client.confirm(dashboard)
+    }
+}
+
+extension ViewController: DisasterSegueConfirmationViewControllerDelegate {
+    func disasterSegueConfirmationViewControllerDidConfirmDisasterName(controller: DisasterSegueConfirmationViewController, name: String) {
+        controller.dismiss(nil)
+        guard let location = mapView?.userLocation.coordinate else {
+            return
+        }
+        let disaster = Disaster(coordinate: Coordinate(latitude: location.latitude, longitude: location.longitude), name: name)
+        client.simulateDisaster(disaster)
+    }
+    
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DisasterNameSegue" {
+            let controller = segue.destinationController as! DisasterSegueConfirmationViewController
+            controller.delegate = self
+        }
     }
 }
