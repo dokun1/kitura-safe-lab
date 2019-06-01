@@ -24,7 +24,7 @@ If you are working with the completed project, run things in this order:
 9. Click "Disaster" button on dashboard, confirm name of disaster
 10. Respond to alert on iOS device
 
-If you want to test this with real devices, either deploy this server and use the address, or use [ngrok]() to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received.
+If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received.
 
 ## What's happening underneath the hood
 
