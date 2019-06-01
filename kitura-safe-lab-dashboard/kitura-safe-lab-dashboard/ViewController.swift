@@ -12,18 +12,14 @@ import MapKit
 
 class ViewController: NSViewController {
     var client = DisasterSocketClient(address: "localhost:8080")
+    var annotationProcessingQueue = DispatchQueue(label: "com.ibm.annotationProcessingQueue")
     @IBOutlet weak var mapView: MKMapView?
+    var annotations = [PersonAnnotation]()
     
     override func viewDidAppear() {
         super.viewDidAppear()
         client.delegate = self
-        
-    }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
+        mapView?.delegate = self
     }
 }
 
@@ -35,24 +31,44 @@ extension ViewController { //IBActions
     @IBAction func simulateDisaster(target: Any) {
         performSegue(withIdentifier: "DisasterNameSegue", sender: nil)
     }
-}
-
-class PersonAnnotation: NSObject, MKAnnotation {
-    init(coordinate: CLLocationCoordinate2D, person: Person) {
-        self.coordinate = coordinate
-        self.person = person
+    
+    @IBAction func resetButtonTapped(target: Any) {
+        if let mapAnnotations = self.mapView?.annotations {
+            self.mapView?.removeAnnotations(mapAnnotations)
+        }
+        self.annotations.removeAll()
     }
-    var coordinate: CLLocationCoordinate2D
-    var person: Person?
 }
 
 extension ViewController: DisasterSocketClientDelegate {
     func statusReported(client: DisasterSocketClient, person: Person) {
-        let coordinate = CLLocationCoordinate2D(latitude: person.coordinate.latitude, longitude: person.coordinate.longitude)
-        let annotation = PersonAnnotation(coordinate: coordinate, person: person)
+        annotationProcessingQueue.sync {
+            let coordinate = CLLocationCoordinate2D(latitude: person.coordinate.latitude, longitude: person.coordinate.longitude)
+            switch person.status {
+            case .unreported:
+                let newAnnotation = UnreportedPersonAnnotation(coordinate: coordinate, person: person)
+                self.annotations.append(newAnnotation)
+                drop(newAnnotation)
+                break
+            case .safe:
+                removeDuplicateAnnotations(for: person)
+                let newAnnotation = SafePersonAnnotation(coordinate: coordinate, person: person)
+                drop(newAnnotation)
+                break
+            case .unsafe:
+                removeDuplicateAnnotations(for: person)
+                let newAnnotation = UnsafePersonAnnotation(coordinate: coordinate, person: person)
+                drop(newAnnotation)
+                break
+            }
+        }
+    }
+    
+    func removeDuplicateAnnotations(for person: Person) {
+        let existingAnnotation = self.annotations.filter { $0.person?.id == person.id }
+        self.annotations = self.annotations.filter { $0.person?.id != person.id }
         DispatchQueue.main.async {
-            self.mapView?.showAnnotations([annotation], animated: true)
-//            self.mapView?.addAnnotation(annotation)
+            self.mapView?.removeAnnotations(existingAnnotation)
         }
     }
     
@@ -97,5 +113,39 @@ extension ViewController: DisasterSegueConfirmationViewControllerDelegate {
             let controller = segue.destinationController as! DisasterSegueConfirmationViewController
             controller.delegate = self
         }
+    }
+}
+
+extension ViewController: MKMapViewDelegate {
+    func drop(_ annotation: PersonAnnotation) {
+        DispatchQueue.main.async {
+            self.mapView?.addAnnotation(annotation)
+            self.mapView?.selectAnnotation(annotation, animated: true)
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        } else if annotation is SafePersonAnnotation {
+            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "safePerson")
+            view.pinTintColor = .blue
+            view.animatesDrop = true
+            view.canShowCallout = true
+            return view
+        } else if annotation is UnsafePersonAnnotation {
+            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "unsafePerson")
+            view.pinTintColor = .red
+            view.animatesDrop = true
+            view.canShowCallout = true
+            return view
+        } else if annotation is UnreportedPersonAnnotation {
+            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "unreportedPerson")
+            view.pinTintColor = .green
+            view.animatesDrop = true
+            view.canShowCallout = true
+            return view
+        }
+        return nil
     }
 }

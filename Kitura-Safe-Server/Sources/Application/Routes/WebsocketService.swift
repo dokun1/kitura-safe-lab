@@ -31,6 +31,7 @@ class DisasterSocketService: WebSocketService {
         if connection.id == dashboardConnection?.dashboardID {
             dashboardConnection = nil
         }
+        connectedPeople = connectedPeople.filter { $0.id != connection.id }
         allConnections = allConnections.filter { $0 != connection }
     }
     
@@ -58,6 +59,7 @@ class DisasterSocketService: WebSocketService {
     }
     
     private func reportStatus(for person: Person) {
+        connectedPeople = connectedPeople.filter { $0.id != person.id }
         connectedPeople.append(person)
         guard let dashboard = dashboardConnection else {
             Log.error("dashboard is not currently registered with server")

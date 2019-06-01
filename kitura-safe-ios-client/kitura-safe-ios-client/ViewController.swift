@@ -16,11 +16,6 @@ class ViewController: UIViewController {
     var client = DisasterSocketClient(address: "localhost:8080")
     var currentPerson: Person?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         client.delegate = self
