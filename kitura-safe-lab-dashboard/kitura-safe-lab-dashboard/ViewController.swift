@@ -53,11 +53,13 @@ extension ViewController: DisasterSocketClientDelegate {
             case .safe:
                 removeDuplicateAnnotations(for: person)
                 let newAnnotation = SafePersonAnnotation(coordinate: coordinate, person: person)
+                self.annotations.append(newAnnotation)
                 drop(newAnnotation)
                 break
             case .unsafe:
                 removeDuplicateAnnotations(for: person)
                 let newAnnotation = UnsafePersonAnnotation(coordinate: coordinate, person: person)
+                self.annotations.append(newAnnotation)
                 drop(newAnnotation)
                 break
             }
@@ -82,11 +84,11 @@ extension ViewController: DisasterSocketClientDelegate {
     }
     
     func clientDisconnected(client: DisasterSocketClient) {
-        print("")
+        print("client disconnected")
     }
     
     func clientErrorOccurred(client: DisasterSocketClient, error: Error) {
-        print("")
+        print("error occurred: \(error.localizedDescription)")
     }
     
     func clientReceivedRegistrationID(client: DisasterSocketClient, id: String) {

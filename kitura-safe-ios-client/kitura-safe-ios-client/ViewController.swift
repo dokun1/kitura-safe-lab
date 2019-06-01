@@ -84,19 +84,15 @@ extension ViewController: DisasterSocketClientDelegate {
         }
     }
     
-    func statusReported(client: DisasterSocketClient, person: Person) {
-        print("")
-    }
-    
     func clientConnected(client: DisasterSocketClient) {
-        print("")
+        print("websocket client connected")
     }
     
     func clientDisconnected(client: DisasterSocketClient) {
-        print("")
+        print("websocket client disconnected")
     }
     
     func clientErrorOccurred(client: DisasterSocketClient, error: Error) {
-        print("")
+        print("error occurred with websocket client: \(error.localizedDescription)")
     }
 }

@@ -10,7 +10,6 @@ import Foundation
 import Starscream
 
 protocol DisasterSocketClientDelegate: class {
-    func statusReported(client: DisasterSocketClient, person: Person)
     func clientConnected(client: DisasterSocketClient)
     func clientDisconnected(client: DisasterSocketClient)
     func clientErrorOccurred(client: DisasterSocketClient, error: Error)

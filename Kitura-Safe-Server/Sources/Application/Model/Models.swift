@@ -14,9 +14,9 @@ enum Safety: String, Codable {
         case unsafe = "unsafe"
     }
     
-    case unreported
-    case safe
-    case unsafe
+    case unreported = "Unreported"
+    case safe = "Safe"
+    case unsafe = "Unsafe"
 }
 
 struct Coordinate: Codable, Hashable {
