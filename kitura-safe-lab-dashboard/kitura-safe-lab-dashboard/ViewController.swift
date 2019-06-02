@@ -75,11 +75,10 @@ extension ViewController: DisasterSocketClientDelegate {
     }
     
     func clientConnected(client: DisasterSocketClient) {
-        guard let currentLocation = mapView?.userLocation else {
+        guard let currentLocation = mapView?.userLocation.coordinate else {
             return
         }
-        let span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
-        let region = MKCoordinateRegion(center: currentLocation.coordinate, span: span)
+        let region = MKCoordinateRegion(center: currentLocation, latitudinalMeters: 1000, longitudinalMeters: 1000)
         self.mapView?.setRegion(region, animated: true)
     }
     

@@ -23,9 +23,8 @@ class DisasterSocketService: WebSocketService {
     func connected(connection: WebSocketConnection) {
         Log.info("connection established: \(connection)")
         allConnections.append(connection)
-        let token = RegistrationToken(tokenID: connection.id)
         do {
-            connection.send(message: try JSONEncoder().encode(token))
+            connection.send(message: try JSONEncoder().encode(RegistrationToken(tokenID: connection.id)))
         } catch let error {
             Log.error("Could not send registration token to connection \(connection.id): \(error.localizedDescription)")
         }
@@ -41,8 +40,7 @@ class DisasterSocketService: WebSocketService {
     }
     
     func received(message: Data, from: WebSocketConnection) {
-        Log.verbose("data message received: \(String(describing: String(data: message, encoding: .utf8)))")
-        Log.info("data message received from device: \(from.id)")
+        Log.info("data message received: \(String(describing: String(data: message, encoding: .utf8)))")
         parse(message, for: from)
     }
     
@@ -67,23 +65,19 @@ class DisasterSocketService: WebSocketService {
         connectedPeople = connectedPeople.filter { $0.id != person.id }
         connectedPeople.append(person)
         guard let dashboard = dashboardConnection else {
-            Log.error("dashboard is not currently registered with server")
-            return
+            return Log.error("dashboard is not currently registered with server")
         }
-        let connections = allConnections.filter { $0.id == dashboard.dashboardID}
-        for connection in connections {
-            do {
-                connection.send(message: try JSONEncoder().encode(person))
-            } catch let error {
-                Log.error("encountered error reporting status for person \(person.id): \(error.localizedDescription)")
-            }
+        let dashboardConnection = allConnections.filter { $0.id == dashboard.dashboardID }.first
+        do {
+            dashboardConnection?.send(message: try JSONEncoder().encode(person))
+        } catch let error {
+            Log.error("encountered error reporting status for person \(person.id): \(error.localizedDescription)")
         }
     }
     
     private func notifyDevices(of disaster: Disaster) {
         guard let dashboardConnection = dashboardConnection else {
-            Log.error("no registered dashboard connection")
-            return
+            return Log.error("no registered dashboard connection")
         }
         let connectedDevices = allConnections.filter { $0.id != dashboardConnection.dashboardID }
         for device in connectedDevices {

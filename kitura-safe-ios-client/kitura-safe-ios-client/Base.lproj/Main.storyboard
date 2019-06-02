@@ -22,11 +22,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o1a-2q-dVH">
-                                <rect key="frame" x="20" y="821" width="102" height="41"/>
+                                <rect key="frame" x="20" y="771" width="102" height="41"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="41" id="REW-Kr-pc3"/>
-                                    <constraint firstAttribute="width" constant="102" id="T37-G0-ygg"/>
+                                    <constraint firstAttribute="width" constant="102" id="bPb-Ko-h7y"/>
+                                    <constraint firstAttribute="height" constant="41" id="eDR-JJ-D80"/>
                                 </constraints>
                                 <state key="normal" title="Connect">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -41,12 +41,15 @@
                             <constraint firstAttribute="bottom" secondItem="CuT-8v-Uub" secondAttribute="bottom" id="7mK-tn-oVY"/>
                             <constraint firstItem="CuT-8v-Uub" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="DlE-S1-OUD"/>
                             <constraint firstItem="CuT-8v-Uub" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="FAF-9o-2F9"/>
-                            <constraint firstItem="o1a-2q-dVH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Rlg-Si-qzo"/>
-                            <constraint firstItem="o1a-2q-dVH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="bPf-BC-yca"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="o1a-2q-dVH" secondAttribute="bottom" constant="50" id="FAi-nC-lbG"/>
+                            <constraint firstItem="o1a-2q-dVH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="TfJ-e3-KiD"/>
                             <constraint firstItem="CuT-8v-Uub" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qXR-Up-2rQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="CuT-8v-Uub" id="UKS-rS-j7s"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

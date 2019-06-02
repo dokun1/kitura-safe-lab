@@ -26,8 +26,7 @@ class ViewController: UIViewController {
 extension ViewController: LocationManagerDelegate {
     func manager(_ manager: LocationManager, didReceiveFirst location: CLLocationCoordinate2D) {
         DispatchQueue.main.async {
-            let span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
-            let region = MKCoordinateRegion(center: location, span: span)
+            let region = MKCoordinateRegion(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
             self.mapView?.setRegion(region, animated: true)
         }
     }
