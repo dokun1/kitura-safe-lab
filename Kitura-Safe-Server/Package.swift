@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Kitura-Safe-Server",
+    name: "kitura-safe-server",
     dependencies: [
       .package(url: "https://github.com/IBM-Swift/Kitura.git", .upToNextMinor(from: "2.7.0")),
       .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", from: "1.7.1"),
@@ -13,7 +13,7 @@ let package = Package(
       .package(url: "https://github.com/IBM-Swift/Kitura-OpenAPI.git", from: "1.2.1")
     ],
     targets: [
-      .target(name: "Kitura-Safe-Server", dependencies: [ .target(name: "Application"), "Kitura" , "HeliumLogger"]),
+      .target(name: "kitura-safe-server", dependencies: [ .target(name: "Application"), "Kitura" , "HeliumLogger"]),
       .target(name: "Application", dependencies: [ "Kitura", "CloudEnvironment","SwiftMetrics", "Health", "Kitura-WebSocket", "KituraOpenAPI"]),
 
       .testTarget(name: "ApplicationTests" , dependencies: [.target(name: "Application"), "Kitura","HeliumLogger" ])
