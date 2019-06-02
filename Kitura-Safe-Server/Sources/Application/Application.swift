@@ -6,7 +6,6 @@ import CloudEnvironment
 import KituraContracts
 import Health
 import KituraOpenAPI
-import KituraWebSocket
 
 public let projectPath = ConfigurationManager.BasePath.project.path
 public let health = Health()
@@ -23,7 +22,6 @@ public class App {
     func postInit() throws {
         // Endpoints
         initializeHealthRoutes(app: self)
-        WebSocket.register(service: DisasterSocketService(), onPath: "/disaster")
     }
 
     public func run() throws {
