@@ -11,21 +11,21 @@ import Starscream
 import MapKit
 
 class ViewController: NSViewController {
-    var client = DisasterSocketClient(address: "localhost:8080")
+    var disasterClient = DisasterSocketClient(address: "localhost:8080")
     var annotationProcessingQueue = DispatchQueue(label: "com.ibm.annotationProcessingQueue")
     @IBOutlet weak var mapView: MKMapView?
     var annotations = [PersonAnnotation]()
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        client.delegate = self
+        disasterClient.delegate = self
         mapView?.delegate = self
     }
 }
 
 extension ViewController { //IBActions
     @IBAction func connectDashboard(target: Any) {
-        client.attemptConnection()
+        disasterClient.attemptConnection()
     }
     
     @IBAction func simulateDisaster(target: Any) {
@@ -91,11 +91,11 @@ extension ViewController: DisasterSocketClientDelegate {
         print("error occurred: \(error.localizedDescription)")
     }
     
-    func clientReceivedRegistrationID(client: DisasterSocketClient, id: String) {
+    func clientReceivedToken(client: DisasterSocketClient, token: RegistrationToken) {
         guard let currentLocation = mapView?.userLocation.coordinate else {
             return
         }
-        let dashboard = Dashboard(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), dashboardID: id)
+        let dashboard = Dashboard(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), dashboardID: token.tokenID)
         client.confirm(dashboard)
     }
 }
@@ -107,7 +107,7 @@ extension ViewController: DisasterSegueConfirmationViewControllerDelegate {
             return
         }
         let disaster = Disaster(coordinate: Coordinate(latitude: location.latitude, longitude: location.longitude), name: name)
-        client.simulateDisaster(disaster)
+        disasterClient.simulate(disaster)
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -129,25 +129,20 @@ extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
-        } else if annotation is SafePersonAnnotation {
-            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "safePerson")
-            view.pinTintColor = .blue
-            view.animatesDrop = true
-            view.canShowCallout = true
-            return view
-        } else if annotation is UnsafePersonAnnotation {
-            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "unsafePerson")
-            view.pinTintColor = .red
-            view.animatesDrop = true
-            view.canShowCallout = true
-            return view
-        } else if annotation is UnreportedPersonAnnotation {
-            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "unreportedPerson")
-            view.pinTintColor = .green
-            view.animatesDrop = true
-            view.canShowCallout = true
-            return view
         }
-        return nil
+        var view = MKPinAnnotationView()
+        if annotation is SafePersonAnnotation {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "safePerson")
+            view.pinTintColor = .blue
+        } else if annotation is UnsafePersonAnnotation {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "unsafePerson")
+            view.pinTintColor = .red
+        } else if annotation is UnreportedPersonAnnotation {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "unreportedPerson")
+            view.pinTintColor = .green
+        }
+        view.animatesDrop = true
+        view.canShowCallout = true
+        return view
     }
 }

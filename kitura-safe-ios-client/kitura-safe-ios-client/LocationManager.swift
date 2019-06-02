@@ -13,7 +13,7 @@ protocol LocationManagerDelegate {
     func manager(_ manager: LocationManager, didReceiveFirst location: CLLocationCoordinate2D)
 }
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+class LocationManager: NSObject {
     private var locationManager: CLLocationManager?
     public var lastLoggedLocation: CLLocation?
     var delegate: LocationManagerDelegate?
@@ -23,7 +23,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager = CLLocationManager()
         if let manager = self.locationManager {
             manager.requestAlwaysAuthorization()
-            manager.requestWhenInUseAuthorization()
             if CLLocationManager.locationServicesEnabled() {
                 manager.delegate = self
                 manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -32,9 +31,9 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             }
         }
     }
-    
-    // MARK: Location Manager Delegate Methods
-    
+}
+
+extension LocationManager: CLLocationManagerDelegate {
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("\(Date()) - new location gathered -")
         print("\(String(describing: locations.first?.coordinate))")

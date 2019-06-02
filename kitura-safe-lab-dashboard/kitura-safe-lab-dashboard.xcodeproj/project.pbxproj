@@ -12,7 +12,7 @@
 		539AC6A122A0377D0055B1E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 539AC6A022A0377D0055B1E0 /* Assets.xcassets */; };
 		539AC6A422A0377D0055B1E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539AC6A222A0377D0055B1E0 /* Main.storyboard */; };
 		539AC6AD22A03A110055B1E0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539AC6AC22A03A110055B1E0 /* MapKit.framework */; };
-		539AC6AF22A03B4B0055B1E0 /* WebsocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC6AE22A03B4B0055B1E0 /* WebsocketClient.swift */; };
+		539AC6AF22A03B4B0055B1E0 /* DisasterSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC6AE22A03B4B0055B1E0 /* DisasterSocketClient.swift */; };
 		539AC8A922A052810055B1E0 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539AC8A822A052810055B1E0 /* NetworkExtension.framework */; };
 		539AC8D122A2D5F20055B1E0 /* DisasterSegueConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC8D022A2D5F20055B1E0 /* DisasterSegueConfirmationViewController.swift */; };
 		539AC8D522A2DA9D0055B1E0 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AC8D422A2DA9D0055B1E0 /* Models.swift */; };
@@ -31,7 +31,7 @@
 		539AC6A522A0377D0055B1E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		539AC6A622A0377D0055B1E0 /* kitura_safe_lab_dashboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = kitura_safe_lab_dashboard.entitlements; sourceTree = "<group>"; };
 		539AC6AC22A03A110055B1E0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		539AC6AE22A03B4B0055B1E0 /* WebsocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketClient.swift; sourceTree = "<group>"; };
+		539AC6AE22A03B4B0055B1E0 /* DisasterSocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisasterSocketClient.swift; sourceTree = "<group>"; };
 		539AC8A822A052810055B1E0 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		539AC8D022A2D5F20055B1E0 /* DisasterSegueConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisasterSegueConfirmationViewController.swift; sourceTree = "<group>"; };
 		539AC8D422A2DA9D0055B1E0 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Models.swift; path = "../../Kitura-Safe-Server/Sources/Application/Model/Models.swift"; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 				539AC69E22A0377B0055B1E0 /* ViewController.swift */,
 				539AC8D822A2E09A0055B1E0 /* Annotations.swift */,
 				539AC8D022A2D5F20055B1E0 /* DisasterSegueConfirmationViewController.swift */,
-				539AC6AE22A03B4B0055B1E0 /* WebsocketClient.swift */,
+				539AC6AE22A03B4B0055B1E0 /* DisasterSocketClient.swift */,
 				539AC8D422A2DA9D0055B1E0 /* Models.swift */,
 				539AC6A022A0377D0055B1E0 /* Assets.xcassets */,
 				539AC6A222A0377D0055B1E0 /* Main.storyboard */,
@@ -244,7 +244,7 @@
 				539AC69D22A0377B0055B1E0 /* AppDelegate.swift in Sources */,
 				539AC8D922A2E09A0055B1E0 /* Annotations.swift in Sources */,
 				539AC8D122A2D5F20055B1E0 /* DisasterSegueConfirmationViewController.swift in Sources */,
-				539AC6AF22A03B4B0055B1E0 /* WebsocketClient.swift in Sources */,
+				539AC6AF22A03B4B0055B1E0 /* DisasterSocketClient.swift in Sources */,
 				539AC8D522A2DA9D0055B1E0 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

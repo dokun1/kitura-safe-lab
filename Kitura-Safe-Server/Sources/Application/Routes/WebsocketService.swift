@@ -23,7 +23,12 @@ class DisasterSocketService: WebSocketService {
     func connected(connection: WebSocketConnection) {
         Log.info("connection established: \(connection)")
         allConnections.append(connection)
-        connection.send(message: "ID=\(connection.id)")
+        let token = RegistrationToken(tokenID: connection.id)
+        do {
+            connection.send(message: try JSONEncoder().encode(token))
+        } catch let error {
+            Log.error("Could not send registration token to connection \(connection.id): \(error.localizedDescription)")
+        }
     }
     
     func disconnected(connection: WebSocketConnection, reason: WebSocketCloseReasonCode) {

@@ -12,13 +12,12 @@ import MapKit
 class ViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView?
     var locationManager: LocationManager?
-    var lastLocation: CLLocationCoordinate2D?
-    var client = DisasterSocketClient(address: "localhost:8080")
+    var disasterClient = DisasterSocketClient(address: "localhost:8080")
     var currentPerson: Person?
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        client.delegate = self
+        disasterClient.delegate = self
         locationManager = LocationManager()
         locationManager?.delegate = self
     }
@@ -26,16 +25,17 @@ class ViewController: UIViewController {
 
 extension ViewController: LocationManagerDelegate {
     func manager(_ manager: LocationManager, didReceiveFirst location: CLLocationCoordinate2D) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
-        let region = MKCoordinateRegion(center: location, span: span)
-        self.mapView?.setRegion(region, animated: true)
-        lastLocation = location
+        DispatchQueue.main.async {
+            let span = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+            let region = MKCoordinateRegion(center: location, span: span)
+            self.mapView?.setRegion(region, animated: true)
+        }
     }
 }
 
 extension ViewController { //IBActions
     @IBAction func connect(target: Any) {
-        client.attemptConnection()
+        disasterClient.attemptConnection()
     }
 }
 
@@ -61,7 +61,7 @@ extension ViewController: DisasterSocketClientDelegate {
         }
     }
     
-    func clientReceivedID(client: DisasterSocketClient, id: String) {
+    func clientReceivedToken(client: DisasterSocketClient, token: RegistrationToken) {
         DispatchQueue.main.async {
             guard let currentLocation = self.locationManager?.lastLoggedLocation?.coordinate else {
                 return
@@ -75,7 +75,7 @@ extension ViewController: DisasterSocketClientDelegate {
                     print("could not get name from alert controller")
                     return
                 }
-                let person = Person(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), name: name, id: id, status: .unreported)
+                let person = Person(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), name: name, id: token.tokenID, status: .unreported)
                 self.currentPerson = person
                 client.reportStatus(for: person)
             }

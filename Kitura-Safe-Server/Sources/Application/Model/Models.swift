@@ -44,3 +44,7 @@ struct Dashboard: Codable {
     var coordinate: Coordinate
     var dashboardID: String
 }
+
+struct RegistrationToken: Codable {
+    var tokenID: String
+}

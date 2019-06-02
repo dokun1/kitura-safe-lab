@@ -10,11 +10,11 @@ import Foundation
 import Starscream
 
 protocol DisasterSocketClientDelegate: class {
+    func statusReported(client: DisasterSocketClient, person: Person)
     func clientConnected(client: DisasterSocketClient)
     func clientDisconnected(client: DisasterSocketClient)
     func clientErrorOccurred(client: DisasterSocketClient, error: Error)
     func clientReceivedToken(client: DisasterSocketClient, token: RegistrationToken)
-    func clientReceivedDisaster(client: DisasterSocketClient, disaster: Disaster)
 }
 
 enum DisasterSocketError: Error {
@@ -24,7 +24,7 @@ enum DisasterSocketError: Error {
 class DisasterSocketClient {
     weak var delegate: DisasterSocketClientDelegate?
     var address: String
-    var person: Person?
+    var id: String?
     public var disasterSocket: WebSocket?
     
     init(address: String) {
@@ -42,13 +42,23 @@ class DisasterSocketClient {
         disasterSocket?.connect()
     }
     
+    
     public func disconnect() {
         disasterSocket?.disconnect()
     }
     
-    public func reportStatus(for person: Person) {
+    public func confirm(_ dashboard: Dashboard) {
+        self.id = dashboard.dashboardID
         do {
-            disasterSocket?.write(data: try JSONEncoder().encode(person))
+            disasterSocket?.write(data: try JSONEncoder().encode(dashboard))
+        } catch let error {
+            print("error writing dashboard registration to socket: \(error.localizedDescription)")
+        }
+    }
+    
+    public func simulate(_ disaster: Disaster) {
+        do {
+            try disasterSocket?.write(data: JSONEncoder().encode(disaster))
         } catch let error {
             delegate?.clientErrorOccurred(client: self, error: error)
         }
@@ -69,18 +79,18 @@ extension DisasterSocketClient: WebSocketDelegate {
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        print("websocket message received: \(String(describing: String(data: data, encoding: .utf8)))")
         parse(data)
+        print("websocket message received: \(String(describing: String(data: data, encoding: .utf8)))")
     }
     
     private func parse(_ data: Data) {
-        if let token = try? JSONDecoder().decode(RegistrationToken.self, from: data) {
-            print("registration token received: \(token.tokenID)")
-            delegate?.clientReceivedToken(client: self, token: token)
+        if let person = try? JSONDecoder().decode(Person.self, from: data) {
+            print("received status of person: \(person.id)")
+            delegate?.statusReported(client: self, person: person)
         }
-        if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
-            print("disaster reported: \(disaster.name)")
-            delegate?.clientReceivedDisaster(client: self, disaster: disaster)
+        if let token = try? JSONDecoder().decode(RegistrationToken.self, from: data) {
+            print("received registration token: \(token.tokenID)")
+            delegate?.clientReceivedToken(client: self, token: token)
         }
     }
 }
