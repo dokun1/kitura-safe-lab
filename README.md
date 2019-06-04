@@ -17,8 +17,6 @@ If you've ever been in an area where there's a natural disaster that's occurred 
 
 ## Getting started
 
-// TODO: make branch for starter projects, as completed project should be on master branch.
-
 First, clone this repository. The `master` branch of this repo is the completed project. The `` branch is the starter project for lab completion. Here's how you can prepare your development environment for either branch.
 
 ### Setting up the server
@@ -67,11 +65,15 @@ If you are working with the completed project, run things in this order:
 9. Click "Disaster" button on dashboard, confirm name of disaster
 10. Respond to alert on iOS device
 
-If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received.
+If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received. You also may need to turn off code signing on your Xcode. To do this:
+
+- go to `Build Settings` in your Xcode project
+- search "identity"
+- make sure you have black text entered for any identities
 
 ## Lab Instructions
 
-First, make sure that you follow the [setup]() instructions first. After that, you are ready to begin.
+First, make sure that you follow the [setup](https://github.com/dokun1/kitura-safe-lab#setting-up-the-server) instructions first. After that, you are ready to begin.
 
 ### Part 1 - Starting up your server
 
@@ -111,7 +113,7 @@ func received(message: String, from: WebSocketConnection) {
 }
 ```
 
-This is all you need to set up a websocket connection. In order to make sure that this service is live, open `Application.swift` and add this line of code to the bottom of the `postInit()` function:
+This is all you need to set up a websocket connection. In order to make sure that this service is live, open `Application.swift`, add the line `import KituraWebSocket` at the very top of the file, and add this line of code to the bottom of the `postInit()` function:
 
 ```swift
 WebSocket.register(service: DisasterSocketService(), onPath: "/disaster")
@@ -119,7 +121,7 @@ WebSocket.register(service: DisasterSocketService(), onPath: "/disaster")
 
 Run your server. Use a browser based tool to test your websocket connection, and confirm that it works by checking the logs of your server.
 
-Next, add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
+Next, go back to `WebsocketService.swift` and add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
 
 ```swift
 private var allConnections = [WebSocketConnection]()
@@ -181,7 +183,7 @@ if let dashboard = try? JSONDecoder().decode(Dashboard.self, from: data) {
 }
 ```
 
-Put a breakpoint on the line that saves `dashboard` to `self.dashboard`. Build and run your server, and make sure that your server is running. Now you're going to build out your macOS client to be able to register with the server.
+Put a breakpoint on the line that saves `dashboard` to `self.dashboardConnection`. Build and run your server, and make sure that your server is running. Now you're going to build out your macOS client to be able to register with the server.
 
 ### Part 2 - Setting up your macOS Client
 
@@ -334,33 +336,7 @@ Now let's authenticate your dashboard with a token returned from the server.
 
 ## Part 3 - Using Websockets to authenticate connections
 
-Open up your server, and open `WebsocketService.swift`. Scroll to your `connected:` function, and add the following code below your logging statement:
-
-```swift
-allConnections.append(connection)
-do {
-    connection.send(message: try JSONEncoder().encode(RegistrationToken(tokenID: connection.id)))
-} catch let error {
-    Log.error("Could not send registration token to connection \(connection.id): \(error.localizedDescription)")
-}
-```
-
-Now you are using a model object to verify that the dashboard should hang onto an id. In a second, you're going to go back to your dashboard and add code to handle the receipt of this token, but first, let's add code to confirm the registration of this dashboard. Scroll to your `parse:` function and add the following code:
-
-```swift
-if let dashboard = try? JSONDecoder().decode(Dashboard.self, from: data) {
-    Log.info("dashboard registered with id: \(dashboard.dashboardID)")
-    self.dashboardConnection = dashboard
-}
-```
-
-Lastly, add this to the bottom of your `message:Data` function:
-
-```swift
-parse(message, for: from)
-```
-
-So now, whenever you receive a payload of type `Data` over your connection, you have a function to check what type of object it can be decoded into, and you act accordingly. Now let's make sure that your dashboard responds appropriately when you receive a registration token from the server. 
+Open up your server, and open `WebsocketService.swift`. Scroll to your `connected:` function, and remember that you are using a model object to verify that the dashboard should hang onto an id. In a second, you're going to go back to your dashboard and add code to handle the receipt of this token, but first, also notice that, whenever you receive a payload of type `Data` over your connection, you have a function to check what type of object it can be decoded into, and you act accordingly. Now let's make sure that your dashboard responds appropriately when you receive a registration token from the server. 
 
 Open your dashboard and go back to `DisasterSocketClient.swift`. Scroll to your `websocketDidReceiveData` function and add this:
 
@@ -504,7 +480,7 @@ class ViewController: UIViewController {
 }
 ```
 
-Next, let's make the controller conform to the right delegate:
+Next, let's make the controller conform to the right delegate, so add this extension to the very bottom of this file:
 
 ```swift
 extension ViewController: DisasterSocketClientDelegate {
@@ -536,7 +512,9 @@ You'll use this delegate shortly. Scroll up to the `IBAction` function where you
 disasterClient.attemptConnection()
 ```
 
-Build and run your iOS app. You can test your server if you'd like by adding a breakpoint to see if it receives the connection request from the phone when you tap the "Connect" button. On your phone, instead of responding with a dashboard, you are going to respond to the authentication token with your first use of the `Person` object. Open up `DisasterSocketClient.swift` and add the following code underneath the `disconnect:` function:
+Build and run your iOS app. You can test your server if you'd like by adding a breakpoint to the `connected:` function on your server to see if it receives the connection request from the phone when you tap the "Connect" button. 
+
+On your phone, instead of responding with a dashboard, you are going to respond to the authentication token with your first use of the `Person` object. Open up `DisasterSocketClient.swift` and add the following code underneath the `disconnect:` function:
 
 ```swift
 public func reportStatus(for person: Person) {
@@ -582,7 +560,7 @@ DispatchQueue.main.async {
 }
 ```
 
-Now your phone should be able to do everything it needs to do to report your status when you initially register with the server. 
+Build and run your iOS app - you should now be sending off a message with a person report. Now your phone should be able to do everything it needs to do to report your status when you initially register with the server. 
 
 ## Part 5 - Handling a status report on your server and dashboard
 
@@ -595,21 +573,19 @@ if let person = try? JSONDecoder().decode(Person.self, from: data) {
 }
 ```
 
-Next. beneath this function, add the function to `reportStatus` whenever a connection does this:
+Next. beneath this function, add the following code to `reportStatus` whenever a connection confirms a `Person` object:
 
 ```swift
-private func reportStatus(for person: Person) {
-    connectedPeople = connectedPeople.filter { $0.id != person.id }
-    connectedPeople.append(person)
-    guard let dashboard = dashboardConnection else {
-        return Log.error("dashboard is not currently registered with server")
-    }
-    let dashboardConnection = allConnections.filter { $0.id == dashboard.dashboardID }.first
-    do {
-        dashboardConnection?.send(message: try JSONEncoder().encode(person))
-    } catch let error {
-        Log.error("encountered error reporting status for person \(person.id): \(error.localizedDescription)")
-    }
+connectedPeople = connectedPeople.filter { $0.id != person.id }
+connectedPeople.append(person)
+guard let dashboard = dashboardConnection else {
+    return Log.error("dashboard is not currently registered with server")
+}
+let dashboardConnection = allConnections.filter { $0.id == dashboard.dashboardID }.first
+do {
+    dashboardConnection?.send(message: try JSONEncoder().encode(person))
+} catch let error {
+    Log.error("encountered error reporting status for person \(person.id): \(error.localizedDescription)")
 }
 ```
 
@@ -696,20 +672,18 @@ if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
 }
 ```
 
-By now, your `parse` function should effectively be looking for three different types of `Data`, all thanks to `Codable`. Now, add this function right underneath your `parse:` function:
+By now, your `parse` function should effectively be looking for three different types of `Data`, all thanks to `Codable`. Now, scroll to the `notifyDevices` function, and add the following code:
 
 ```swift
-private func notifyDevices(of disaster: Disaster) {
-    guard let dashboardConnection = dashboardConnection else {
-        return Log.error("no registered dashboard connection")
-    }
-    let connectedDevices = allConnections.filter { $0.id != dashboardConnection.dashboardID }
-    for device in connectedDevices {
-        do {
-            device.send(message: try JSONEncoder().encode(disaster))
-        } catch let error {
-            Log.error("Encountered error reporting disaster to device \(device.id): \(error.localizedDescription)")
-        }
+guard let dashboardConnection = dashboardConnection else {
+    return Log.error("no registered dashboard connection")
+}
+let connectedDevices = allConnections.filter { $0.id != dashboardConnection.dashboardID }
+for device in connectedDevices {
+    do {
+        device.send(message: try JSONEncoder().encode(disaster))
+    } catch let error {
+        Log.error("Encountered error reporting disaster to device \(device.id): \(error.localizedDescription)")
     }
 }
 ```
@@ -719,7 +693,7 @@ This loops through all of the existing connections to iOS devices, and sends a m
 Open your iOS client project, and open `DisasterSocketClient.swift`. Add this code to the bottom of your `parse:Data` function:
 
 ```swift
-if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
+else if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
     print("disaster reported: \(disaster.name)")
     delegate?.clientReceivedDisaster(client: self, disaster: disaster)
 }
