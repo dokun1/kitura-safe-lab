@@ -17,7 +17,7 @@ If you've ever been in an area where there's a natural disaster that's occurred 
 
 ## Getting started
 
-First, clone this repository. The `master` branch of this repo is the completed project. The `` branch is the starter project for lab completion. Here's how you can prepare your development environment for either branch.
+First, clone this repository. The `master` branch of this repo is the completed project. The `starter` branch is the starter project for lab completion. Here's how you can prepare your development environment for either branch.
 
 ### Setting up the server
 
