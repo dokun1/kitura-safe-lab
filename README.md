@@ -6,6 +6,8 @@ If you've ever been in an area where there's a natural disaster that's occurred 
 
 ## Requirements
 
+This lab was written in Swift 5.0 for Xcode 10.2.1. We cannot guarantee this will all work as expected on beta software 🙃.
+
 - [Cocoapods](https://cocoapods.org)
 - Swift 5.0+
 - Terminal
@@ -15,43 +17,9 @@ If you've ever been in an area where there's a natural disaster that's occurred 
 - [ngrok](https://ngrok.com/)
 - an iOS device that can run apps from Xcode
 
-## Getting started
-
-First, clone this repository. The `master` branch of this repo is the completed project. The `` branch is the starter project for lab completion. Here's how you can prepare your development environment for either branch.
-
-### Setting up the server
-
-1. Open Terminal.
-2. Navigate to the `kitura-safe-server` directory.
-3. Type `ls` - if you see `Package.swift` in the resulting output, you are in the right place.
-4. Enter `export KITURA_NIO=1` into Terminal.
-5. Enter `swift package generate-xcodeproj` into Terminal, then `xed .` when the command is done.
-6. In Xcode, run the server on My Mac.
-7. Open a web browser, and navigate to `localhost:8080`. If you see the Kitura home page, you are ready to go! Don't quit the server!
-
-### Setting up the macOS client
-
-1. Open Terminal.
-2. Navigate to the `kitura-safe-lab-dashboard` directory.
-3. Type `ls` - if you see `Podfile` in the resulting output, then you are in the right place.
-4. Enter `pod install` into Terminal.
-5. Enter `xed .` into Terminal.
-6. Run the main application on My Mac.
-7. Accept location tracking for the application.
-
-### Setting up the iOS client
-
-1. Open Terminal.
-2. Navigate to the `kitura-safe-ios-client` directory.
-3. Type `ls` - if you see `Podfile` in the resulting output, then you are in the right place.
-4. Enter `pod install` into Terminal.
-5. Enter `xed .` into Terminal.
-6. Run the main application on an iOS simulator of your choice.
-7. Type `Always Allow` when prompted for location tracking on the iOS app.
-
 ## App Workflow
 
-If you are working with the completed project, run things in this order:
+In this lab, you will want to start with the `starter` branch. If you are working with the completed project on the `master` branch, run things in this order:
 
 1. Start your server
 2. Start your macOS dashboard
@@ -65,11 +33,48 @@ If you are working with the completed project, run things in this order:
 9. Click "Disaster" button on dashboard, confirm name of disaster
 10. Respond to alert on iOS device
 
-If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received. You also may need to turn off code signing on your Xcode. To do this:
+## Getting started
+
+First, clone this repository. The `master` branch of this repo is the completed project. The `starter` branch is the starter project for lab completion. Here's how you can prepare your development environment for either branch.
+
+### Setting up the server
+
+1. Open Terminal.
+2. Navigate to the `kitura-safe-server` directory.
+3. Type `ls` - if you see `Package.swift` in the resulting output, you are in the right place.
+4. Enter `export KITURA_NIO=1` into Terminal.
+5. Enter `swift package generate-xcodeproj` into Terminal, then `xed .` when the command is done.
+6. In Xcode, run the server on My Mac.
+7. Open a web browser, and navigate to `localhost:8080`. If you see the Kitura home page, you are ready to go! Don't quit the server!
+
+### Setting up the macOS client (dashboard)
+
+1. Open Terminal.
+2. Navigate to the `kitura-safe-lab-dashboard` directory.
+3. Type `ls` - if you see `Podfile` in the resulting output, then you are in the right place.
+4. Enter `pod install` into Terminal.
+5. Enter `xed .` into Terminal.
+6. Run the main application on My Mac.
+7. Accept location tracking for the application.
+
+You also may need to turn off code signing on your Xcode. To do this:
 
 - go to `Build Settings` in your Xcode project
 - search "identity"
 - make sure you have black text entered for any identities
+
+### Setting up the iOS client
+
+1. Open Terminal.
+2. Navigate to the `kitura-safe-ios-client` directory.
+3. Type `ls` - if you see `Podfile` in the resulting output, then you are in the right place.
+4. Enter `pod install` into Terminal.
+5. Enter `xed .` into Terminal.
+6. Run the main application on an iOS simulator of your choice.
+7. Type `Always Allow` when prompted for location tracking on the iOS app.
+8. With the iOS simulator open, click the `Debug` menu in the top toolbar, then Location -> Custom Location. Enter your coordinates here to simulate where you are. The San Jose Marriott is at `(37.330171, -121.888368)`.
+
+If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received. 
 
 ## Lab Instructions
 
@@ -119,7 +124,21 @@ This is all you need to set up a websocket connection. In order to make sure tha
 WebSocket.register(service: DisasterSocketService(), onPath: "/disaster")
 ```
 
-Run your server. Use a browser based tool to test your websocket connection, and confirm that it works by checking the logs of your server.
+Run your server. Open Terminal and enter the following command:
+
+```bash
+curl --include \
+     --no-buffer \
+     --header "Connection: Upgrade" \
+     --header "Upgrade: websocket" \
+     --header "Host: example.com:80" \
+     --header "Origin: http://example.com:80" \
+     --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
+     --header "Sec-WebSocket-Version: 13" \
+     http://localhost:8080/disaster
+```
+
+Check the logs of your server, and you should see that a connection was established. Hit ctrl+c to quit, and continue.
 
 Next, go back to `WebsocketService.swift` and add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
 
@@ -183,9 +202,9 @@ if let dashboard = try? JSONDecoder().decode(Dashboard.self, from: data) {
 }
 ```
 
-Put a breakpoint on the line that saves `dashboard` to `self.dashboardConnection`. Build and run your server, and make sure that your server is running. Now you're going to build out your macOS client to be able to register with the server.
+Put a breakpoint in your `connected` function. Build and run your server, and make sure that your server is running. Now you're going to build out your macOS client (dashboard) to be able to register with the server.
 
-### Part 2 - Setting up your macOS Client
+### Part 2 - Setting up your macOS Client (dashboard)
 
 Switch to your macOS client project, and open the `DisasterSocketClient.swift` file in Xcode. Add the following code to this file:
 
@@ -573,7 +592,7 @@ if let person = try? JSONDecoder().decode(Person.self, from: data) {
 }
 ```
 
-Next. beneath this function, add the following code to `reportStatus` whenever a connection confirms a `Person` object:
+Next, beneath this function, add the following code to `reportStatus` whenever a connection confirms a `Person` object:
 
 ```swift
 connectedPeople = connectedPeople.filter { $0.id != person.id }
@@ -666,7 +685,7 @@ disasterClient.simulate(disaster)
 Now your dashboard is wired up. Next open your server, and open up `WebsocketService.swift`. Add the following code to the bottom of your `parse:Data` function:
 
 ```swift
-if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
+else if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
         Log.info("disaster occurred! \(disaster.name) at (\(disaster.coordinate.latitude), \(disaster.coordinate.longitude))")
     notifyDevices(of: disaster)
 }
