@@ -22,7 +22,7 @@ First, clone this repository. The `master` branch of this repo is the completed 
 ### Setting up the server
 
 1. Open Terminal.
-2. Navigate to the `kitura-safe-server` directory.
+2. Navigate to the `Kitura-Safe-Server` directory.
 3. Type `ls` - if you see `Package.swift` in the resulting output, you are in the right place.
 4. Enter `export KITURA_NIO=1` into Terminal.
 5. Enter `swift package generate-xcodeproj` into Terminal, then `xed .` when the command is done.
