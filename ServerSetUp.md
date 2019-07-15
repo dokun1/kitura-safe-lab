@@ -20,10 +20,9 @@
 
 # Server Set Up
 
-First, stop your server, and let's add the ability to connect to it with a WebSocket connection. Open up the `WebSocketService.swift` file in your server, and add the following code underneath your import statement for `Foundation`:
+First, stop your server, let's add the ability to connect to it with a WebSocket connection. Open up the `WebSocketService.swift` file in the Services folder of your server, and add the following code underneath your import statement for `Foundation`:
 
-```
-swift
+```swift
 import KituraWebSocket
 import LoggerAPI
 
@@ -37,10 +36,9 @@ class DisasterSocketService: WebSocketService {
 }
 ```
 
-Next, you're going to add some protocol stubs inside your `DisasterSocketService`:
+Next, you're going to add some protocol stubs inside your `DisasterSocketService`, we will be adding to these later:
 
-```
-swift
+```swift
 func connected(connection: WebSocketConnection) {
     Log.info("connection established: \(connection)")
 }
@@ -60,15 +58,13 @@ func received(message: String, from: WebSocketConnection) {
 
 This is all you need to set up a websocket connection. In order to make sure that this service is live, open `Application.swift`, add the line `import KituraWebSocket` at the very top of the file, and add this line of code to the bottom of the `postInit()` function:
 
-```
-swift
+```swift
 WebSocket.register(service: DisasterSocketService(), onPath: "/disaster")
 ```
 
 Run your server. Open Terminal and enter the following command:
 
-```
-bash
+```bash
 curl --include \
      --no-buffer \
      --header "Connection: Upgrade" \
@@ -84,8 +80,7 @@ Check the logs of your server, and you should see that a connection was establis
 
 Next, go back to `WebsocketService.swift` and add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
 
-```
-swift
+```swift
 private var allConnections = [WebSocketConnection]()
 private var dashboardConnection: Dashboard?
 private var connectedPeople = [Person]()
@@ -93,8 +88,7 @@ private var connectedPeople = [Person]()
 
 Next, add these three function signatures, which you will use later:
 
-```
-swift
+```swift
 private func parse(_ data: Data, for connection: WebSocketConnection) {
 
 }
@@ -110,8 +104,7 @@ private func notifyDevices(of disaster: Disaster) {
 
 First, you need to act whenever a client connects to you. You will send them a "token", which lets the client know how to identify itself for all future communications. Add this code to your `connected:` function:
 
-```
-swift
+```swift
 allConnections.append(connection)
 do {
     connection.send(message: try JSONEncoder().encode(RegistrationToken(tokenID: connection.id)))
@@ -122,8 +115,7 @@ do {
 
 Next, add the code that handles a disconnection inside the `disconnected:` function:
 
-```
-swift
+```swift
 Log.info("Connection dropped for \(connection.id), reason: \(reason)")
 if connection.id == dashboardConnection?.dashboardID {
     dashboardConnection = nil
@@ -134,16 +126,14 @@ allConnections = allConnections.filter { $0 != connection }
 
 The first "real" thing you'll need to do is handle a dashboard confirming it's registration with you. Since WebSockets can transmit binary data over the wire, you can make use of the `Codable` protocol to easily check what kind of object you've received. Update your `received: Data` function to look like so:
 
-```
-swift
+```swift
 Log.info("data message received: \(String(describing: String(data: message, encoding: .utf8)))")
 parse(message, for: from)
 ```
 
 Next, go inside your `parse:` function and add the following code to handle the registration of a dashboard:
 
-```
-swift
+```swift
 if let dashboard = try? JSONDecoder().decode(Dashboard.self, from: data) {
     Log.info("dashboard registered with id: \(dashboard.dashboardID)")
     self.dashboardConnection = dashboard
