@@ -24,14 +24,14 @@
 
 If you've ever been in an area where there's a natural disaster that's occurred and has affected a large number of people, you may have seen a Facebook notification pop up asking you to report whether or not you are "safe". This has been helpful to families concerned about their loved ones when they can't reach them. Today, we are going to implement this feature with Kitura and WebSockets.
 
-## Requirements
+### Requirements
 
 - [Cocoapods](https://cocoapods.org)
 - Swift 5.0+
 - Terminal
 - Xcode
 
-## Optional
+### Optional
 
 - [ngrok](https://ngrok.com/)
 - An iOS device that can run apps from Xcode
