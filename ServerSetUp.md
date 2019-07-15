@@ -13,9 +13,9 @@
 ## Workshop Table of Contents:
 
 1. [Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/GettingStarted.md)
-2. **[Setting up the Server](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetup.md)**
-3. [Setting up the Dashboard](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetup.md)
-4. [Setting up the iOS client](https://github.com/dokun1/kitua-safe-lab/blob/master/iOSSetup.md)
+2. **[Setting up the Server](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetUp.md)**
+3. [Setting up the Dashboard](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md)
+4. [Setting up the iOS Client](https://github.com/dokun1/kitua-safe-lab/blob/master/iOSSetUp.md)
 5. [Handling status reports and Disasters](https://github.com/dokun1/kitua-safe-lab/blob/master/StatusReportsAndDisasters.md)
 
 # Server Set Up
@@ -56,7 +56,7 @@ func received(message: String, from: WebSocketConnection) {
 }
 ```
 
-This is all you need to set up a websocket connection. In order to make sure that this service is live, open `Application.swift`, add the line `import KituraWebSocket` at the very top of the file, and add this line of code to the bottom of the `postInit()` function:
+This is all you need to set up a WebSocket connection. In order to make sure that this service is live, open `Application.swift`, add the line `import KituraWebSocket` at the very top of this file, and add this line of code to the bottom of the `postInit()` function:
 
 ```swift
 WebSocket.register(service: DisasterSocketService(), onPath: "/disaster")
@@ -78,7 +78,7 @@ curl --include \
 
 Check the logs of your server, and you should see that a connection was established. Hit ctrl+c to quit, and continue.
 
-Next, go back to `WebsocketService.swift` and add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
+Next, go back to `WebSocketService.swift` and add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
 
 ```swift
 private var allConnections = [WebSocketConnection]()
@@ -141,3 +141,7 @@ if let dashboard = try? JSONDecoder().decode(Dashboard.self, from: data) {
 ```
 
 Put a breakpoint in your `connected` function. Build and run your server, and make sure that your server is running. Now you're going to build out your macOS client (dashboard) to be able to register with the server.
+
+# Next Steps
+
+Continue to the [next page](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md) to set up the Dashboard.

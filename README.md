@@ -1,6 +1,6 @@
 ## Kitura "I'm Safe" Lab
 
-This is meant to be a hands-on lab that will be delivered at AltConf 2019 on Wednesday, June 5 at 1pm PST. 
+This is meant to be a hands-on lab that will be delivered at AltConf 2019 on Wednesday, June 5 at 1pm PST.
 
 If you've ever been in an area where there's a natural disaster that's occurred and has affected a large number of people, you may have seen a Facebook notification pop up asking you to report whether or not you are "safe". This has been helpful to families concerned about their loved ones when they can't reach them. Today, we are going to implement this feature with Kitura and Websockets.
 
@@ -74,7 +74,7 @@ You also may need to turn off code signing on your Xcode. To do this:
 7. Type `Always Allow` when prompted for location tracking on the iOS app.
 8. With the iOS simulator open, click the `Debug` menu in the top toolbar, then Location -> Custom Location. Enter your coordinates here to simulate where you are. The San Jose Marriott is at `(37.330171, -121.888368)`.
 
-If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received. 
+If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received.
 
 ## Lab Instructions
 
@@ -104,15 +104,15 @@ Next, you're going to add some protocol stubs inside your `DisasterSocketService
 func connected(connection: WebSocketConnection) {
     Log.info("connection established: \(connection)")
 }
-    
+
 func disconnected(connection: WebSocketConnection, reason: WebSocketCloseReasonCode) {
     Log.info("Connection dropped for \(connection.id), reason: \(reason)")
 }
-    
+
 func received(message: Data, from: WebSocketConnection) {
     Log.info("data message received: \(String(describing: String(data: message, encoding: .utf8)))")
 }
-    
+
 func received(message: String, from: WebSocketConnection) {
     Log.info("string message received: \(message)")
 }
@@ -150,15 +150,15 @@ private var connectedPeople = [Person]()
 
 Next, add these three function signatures, which you will use later:
 
-```swift 
+```swift
 private func parse(_ data: Data, for connection: WebSocketConnection) {
 
 }
-    
+
 private func reportStatus(for person: Person) {
 
 }
-    
+
 private func notifyDevices(of disaster: Disaster) {
 
 }
@@ -237,19 +237,19 @@ extension DisasterSocketClient: WebSocketDelegate {
     func websocketDidConnect(socket: WebSocketClient) {
         delegate?.clientConnected(client: self)
     }
-    
+
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         delegate?.clientDisconnected(client: self)
     }
-    
+
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("websocket message received: \(text)")
     }
-    
+
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("websocket message received: \(String(describing: String(data: data, encoding: .utf8)))")
     }
-    
+
     private func parse(_ data: Data) {
 
     }
@@ -263,7 +263,7 @@ weak var delegate: DisasterSocketClientDelegate?
 var address: String
 var id: String?
 public var disasterSocket: WebSocket?
-    
+
 init(address: String) {
     self.address = address
 }
@@ -300,7 +300,7 @@ class ViewController: NSViewController {
     var annotationProcessingQueue = DispatchQueue(label: "com.ibm.annotationProcessingQueue")
     @IBOutlet weak var mapView: MKMapView?
     var annotations = [PersonAnnotation]()
-    
+
     override func viewDidAppear() {
         super.viewDidAppear()
         disasterClient.delegate = self
@@ -316,11 +316,11 @@ extension ViewController: DisasterSocketClientDelegate {
     func statusReported(client: DisasterSocketClient, person: Person) {
 
     }
-    
+
     func removeDuplicateAnnotations(for person: Person) {
-    
+
     }
-    
+
     func clientConnected(client: DisasterSocketClient) {
         guard let currentLocation = mapView?.userLocation.coordinate else {
             return
@@ -328,15 +328,15 @@ extension ViewController: DisasterSocketClientDelegate {
         let region = MKCoordinateRegion(center: currentLocation, latitudinalMeters: 1000, longitudinalMeters: 1000)
         self.mapView?.setRegion(region, animated: true)
     }
-    
+
     func clientDisconnected(client: DisasterSocketClient) {
         print("client disconnected")
     }
-    
+
     func clientErrorOccurred(client: DisasterSocketClient, error: Error) {
         print("error occurred: \(error.localizedDescription)")
     }
-    
+
     func clientReceivedToken(client: DisasterSocketClient, token: RegistrationToken) {
 
     }
@@ -349,13 +349,13 @@ Then scroll down to the `connectDashboard:` function that occurs whenever you cl
 disasterClient.attemptConnection()
 ```
 
-Make sure your server is running. Build and run your macOS dashboard, and accept location tracking. Click the connect button, and look at your server - you should have triggered a breakpoint. Nice work! Skip past the breakpoint, and make sure that the mapview zooms in to the right region. 
+Make sure your server is running. Build and run your macOS dashboard, and accept location tracking. Click the connect button, and look at your server - you should have triggered a breakpoint. Nice work! Skip past the breakpoint, and make sure that the mapview zooms in to the right region.
 
-Now let's authenticate your dashboard with a token returned from the server. 
+Now let's authenticate your dashboard with a token returned from the server.
 
 ## Part 3 - Using Websockets to authenticate connections
 
-Open up your server, and open `WebsocketService.swift`. Scroll to your `connected:` function, and remember that you are using a model object to verify that the dashboard should hang onto an id. In a second, you're going to go back to your dashboard and add code to handle the receipt of this token, but first, also notice that, whenever you receive a payload of type `Data` over your connection, you have a function to check what type of object it can be decoded into, and you act accordingly. Now let's make sure that your dashboard responds appropriately when you receive a registration token from the server. 
+Open up your server, and open `WebsocketService.swift`. Scroll to your `connected:` function, and remember that you are using a model object to verify that the dashboard should hang onto an id. In a second, you're going to go back to your dashboard and add code to handle the receipt of this token, but first, also notice that, whenever you receive a payload of type `Data` over your connection, you have a function to check what type of object it can be decoded into, and you act accordingly. Now let's make sure that your dashboard responds appropriately when you receive a registration token from the server.
 
 Open your dashboard and go back to `DisasterSocketClient.swift`. Scroll to your `websocketDidReceiveData` function and add this:
 
@@ -428,7 +428,7 @@ class DisasterSocketClient {
     var address: String
     var person: Person?
     public var disasterSocket: WebSocket?
-    
+
     init(address: String) {
         self.address = address
     }
@@ -442,20 +442,20 @@ extension DisasterSocketClient: WebSocketDelegate {
     func websocketDidConnect(socket: WebSocketClient) {
         delegate?.clientConnected(client: self)
     }
-    
+
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         delegate?.clientDisconnected(client: self)
     }
-    
+
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("websocket message received: \(text)")
     }
-    
+
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("websocket message received: \(String(describing: String(data: data, encoding: .utf8)))")
         parse(data)
     }
-    
+
     private func parse(_ data: Data) {
 
     }
@@ -475,7 +475,7 @@ public func attemptConnection() {
     disasterSocket = socket
     disasterSocket?.connect()
 }
-    
+
 public func disconnect() {
     disasterSocket?.disconnect()
 }
@@ -504,21 +504,21 @@ Next, let's make the controller conform to the right delegate, so add this exten
 ```swift
 extension ViewController: DisasterSocketClientDelegate {
     func clientReceivedDisaster(client: DisasterSocketClient, disaster: Disaster) {
-    
+
     }
-    
+
     func clientReceivedToken(client: DisasterSocketClient, token: RegistrationToken) {
-    
+
     }
-    
+
     func clientConnected(client: DisasterSocketClient) {
         print("websocket client connected")
     }
-    
+
     func clientDisconnected(client: DisasterSocketClient) {
         print("websocket client disconnected")
     }
-    
+
     func clientErrorOccurred(client: DisasterSocketClient, error: Error) {
         print("error occurred with websocket client: \(error.localizedDescription)")
     }
@@ -531,7 +531,7 @@ You'll use this delegate shortly. Scroll up to the `IBAction` function where you
 disasterClient.attemptConnection()
 ```
 
-Build and run your iOS app. You can test your server if you'd like by adding a breakpoint to the `connected:` function on your server to see if it receives the connection request from the phone when you tap the "Connect" button. 
+Build and run your iOS app. You can test your server if you'd like by adding a breakpoint to the `connected:` function on your server to see if it receives the connection request from the phone when you tap the "Connect" button.
 
 On your phone, instead of responding with a dashboard, you are going to respond to the authentication token with your first use of the `Person` object. Open up `DisasterSocketClient.swift` and add the following code underneath the `disconnect:` function:
 
@@ -579,7 +579,7 @@ DispatchQueue.main.async {
 }
 ```
 
-Build and run your iOS app - you should now be sending off a message with a person report. Now your phone should be able to do everything it needs to do to report your status when you initially register with the server. 
+Build and run your iOS app - you should now be sending off a message with a person report. Now your phone should be able to do everything it needs to do to report your status when you initially register with the server.
 
 ## Part 5 - Handling a status report on your server and dashboard
 
@@ -658,7 +658,7 @@ Restart your server, run your dashboard, connect, then run your iOS client and c
 
 ## Part 6 - Disaster strikes!
 
-You're going to trigger a disaster from your dashboard, and the server will notify each iOS device connected to it. As each device reports its status, the dashboard will update asynchronously with the statuses as they come in. 
+You're going to trigger a disaster from your dashboard, and the server will notify each iOS device connected to it. As each device reports its status, the dashboard will update asynchronously with the statuses as they come in.
 
 First, open `DisasterSocketClient.swift` on your dashboard. Add the following code underneath the `confirm:Dashboard` function:
 

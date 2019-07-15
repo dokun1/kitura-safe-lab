@@ -13,9 +13,9 @@
 ## Workshop Table of Contents:
 
 1. **[Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/GettingStarted.md)**
-2. [Setting up the Server](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetup.md)
-3. [Setting up the Dashboard](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetup.md)
-4. [Setting up the iOS client](https://github.com/dokun1/kitua-safe-lab/blob/master/iOSSetup.md)
+2. [Setting up the Server](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetUp.md)
+3. [Setting up the Dashboard](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md)
+4. [Setting up the iOS Client](https://github.com/dokun1/kitua-safe-lab/blob/master/iOSSetUp.md)
 5. [Handling status reports and Disasters](https://github.com/dokun1/kitua-safe-lab/blob/master/StatusReportsAndDisasters.md)
 
 # Getting Started
@@ -82,3 +82,7 @@ You also may need to turn off code signing on your Xcode. To do this:
 8. With the iOS simulator open, click the `Debug` menu in the top toolbar, then Location -> Custom Location. Enter your coordinates here to simulate where you are. The San Jose Marriott is at `(37.330171, -121.888368)`.
 
 If you want to test this with real devices, either deploy this server and use the address, or use [ngrok](https://ngrok.com) to tunnel connections through to localhost, and then update the addresses in both the macOS and iOS clients. This can handle *many* concurrent connections, and the pins should drop when the responses are received.
+
+# Next Steps
+
+Continue to the [next page](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetup.md) to set up the Server.
