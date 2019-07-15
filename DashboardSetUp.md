@@ -12,7 +12,7 @@
 
 ## Workshop Table of Contents:
 
-1. [Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/GettingStarted.md)
+1. [Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/README.md)
 2. [Setting up the Server](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetUp.md)
 3. **[Setting up the Dashboard](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md)**
 4. [Setting up the iOS Client](https://github.com/dokun1/kitua-safe-lab/blob/master/iOSSetUp.md)

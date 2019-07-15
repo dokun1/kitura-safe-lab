@@ -12,15 +12,17 @@
 
 ## Workshop Table of Contents:
 
-1. [Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/GettingStarted.md)
+1. [Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/README.md)
 2. **[Setting up the Server](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetUp.md)**
 3. [Setting up the Dashboard](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md)
 4. [Setting up the iOS Client](https://github.com/dokun1/kitua-safe-lab/blob/master/iOSSetUp.md)
-5. [Handling status reports and Disasters](https://github.com/dokun1/kitua-safe-lab/blob/master/StatusReportsAndDisasters.md)
+5. [Handling Status Reports and Disasters](https://github.com/dokun1/kitua-safe-lab/blob/master/StatusReportsAndDisasters.md)
 
 # Server Set Up
 
-First, stop your server, let's add the ability to connect to it with a WebSocket connection. Open up the `WebSocketService.swift` file in the Services folder of your server, and add the following code underneath your import statement for `Foundation`:
+First, stop your server, let's add the ability to connect to it with a WebSocket connection.
+
+Open up the `WebSocketService.swift` file in the Services folder of your project, and add the following code underneath your import statement for `Foundation`:
 
 ```swift
 import KituraWebSocket
@@ -36,7 +38,7 @@ class DisasterSocketService: WebSocketService {
 }
 ```
 
-Next, you're going to add some protocol stubs inside your `DisasterSocketService`, we will be adding to these later:
+Next, you're going to add some protocol stubs inside your `DisasterSocketService`:
 
 ```swift
 func connected(connection: WebSocketConnection) {

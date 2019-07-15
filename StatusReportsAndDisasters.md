@@ -12,7 +12,7 @@
 
 ## Workshop Table of Contents:
 
-1. [Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/GettingStarted.md)
+1. [Getting Started](https://github.com/dokun1/kitua-safe-lab/blob/master/README.md)
 2. [Setting up the Server](https://github.com/dokun1/kitua-safe-lab/blob/master/ServerSetUp.md)
 3. [Setting up the Dashboard](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md)
 4. [Setting up the iOS Client](https://github.com/dokun1/kitua-safe-lab/blob/master/iOSSetUp.md)
@@ -20,7 +20,9 @@
 
 # Handling Status Reports and Disasters
 
-Now, go back to your server project. Open `WebsocketService.swift` and go to the `parse:` function. Add this conditional decode logic at the bottom of the function:
+## Status Reports
+
+Now, go back to your server project. Open `WebSocketService.swift` and go to the `parse:` function. Add this conditional decode logic at the bottom of the function:
 
 ```swift
 if let person = try? JSONDecoder().decode(Person.self, from: data) {
@@ -93,6 +95,8 @@ DispatchQueue.main.async {
 
 Restart your server, run your dashboard, connect, then run your iOS client and connect. Without any breakpoints, you should see a pin drop for the person that registered after that person confirms their name. You are now ready to handle a disaster!!
 
+## Disasters
+
 You're going to trigger a disaster from your dashboard, and the server will notify each iOS device connected to it. As each device reports its status, the dashboard will update asynchronously with the statuses as they come in.
 
 First, open `DisasterSocketClient.swift` on your dashboard. Add the following code underneath the `confirm:Dashboard` function:
@@ -117,7 +121,7 @@ let disaster = Disaster(coordinate: Coordinate(latitude: location.latitude, long
 disasterClient.simulate(disaster)
 ```
 
-Now your dashboard is wired up. Next open your server, and open up `WebsocketService.swift`. Add the following code to the bottom of your `parse:Data` function:
+Now your dashboard is wired up. Next open your server, and open up `WebSocketService.swift`. Add the following code to the bottom of your `parse:Data` function:
 
 ```swift
 else if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
