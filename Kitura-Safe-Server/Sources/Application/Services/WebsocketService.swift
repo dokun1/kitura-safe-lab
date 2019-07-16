@@ -20,6 +20,12 @@ class DisasterSocketService: WebSocketService {
     private var dashboardConnection: Dashboard?
     private var connectedPeople = [Person]()
     
+    public func getAllConnections() -> Int {
+        
+        return connectedPeople.count
+        
+    }
+    
     func connected(connection: WebSocketConnection) {
         Log.info("connection established: \(connection)")
         allConnections.append(connection)
@@ -38,6 +44,7 @@ class DisasterSocketService: WebSocketService {
         connectedPeople = connectedPeople.filter { $0.id != connection.id }
         allConnections = allConnections.filter { $0 != connection }
     }
+    
     
     func received(message: Data, from: WebSocketConnection) {
         Log.info("data message received: \(String(describing: String(data: message, encoding: .utf8)))")
