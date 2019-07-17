@@ -92,15 +92,6 @@
         }
       },
       {
-        "package": "Kitura-net",
-        "repositoryURL": "https://github.com/IBM-Swift/Kitura-net.git",
-        "state": {
-          "branch": null,
-          "revision": "5fc06b21e8e615147fa8341c249ae010a1b41fba",
-          "version": "2.3.0"
-        }
-      },
-      {
         "package": "Kitura-NIO",
         "repositoryURL": "https://github.com/IBM-Swift/Kitura-NIO.git",
         "state": {
@@ -125,15 +116,6 @@
           "branch": null,
           "revision": "d62d74bca48c6fb76f9fc1f48eeb2d7af415e80b",
           "version": "2.0.1"
-        }
-      },
-      {
-        "package": "Kitura-WebSocket",
-        "repositoryURL": "https://github.com/IBM-Swift/Kitura-WebSocket.git",
-        "state": {
-          "branch": null,
-          "revision": "2595b0a9a4579e7c4abc61c52c588c4fcf988232",
-          "version": "2.1.2"
         }
       },
       {

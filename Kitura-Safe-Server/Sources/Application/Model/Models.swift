@@ -48,3 +48,9 @@ struct Dashboard: Codable {
 struct RegistrationToken: Codable {
     var tokenID: String
 }
+
+struct DoubleStructure: Codable {
+    var doubleValue: Double
+}
+
+

@@ -25,7 +25,7 @@
 
 ## Status Reports
 
-Now, go back to your server project. Open `WebSocketService.swift` and go to the `parse:` function. Add this conditional decode logic at the bottom of the function:
+Now, go back to your server project. Open `WebsocketService.swift` and go to the `parse:` function. Add this conditional decode logic at the bottom of the function:
 
 ```swift
 if let person = try? JSONDecoder().decode(Person.self, from: data) {
@@ -124,7 +124,7 @@ let disaster = Disaster(coordinate: Coordinate(latitude: location.latitude, long
 disasterClient.simulate(disaster)
 ```
 
-Now your dashboard is wired up. Next open your server, and open up `WebSocketService.swift`. Add the following code to the bottom of your `parse:Data` function:
+Now your dashboard is wired up. Next open your server, and open up `WebsocketService.swift`. Add the following code to the bottom of your `parse:Data` function:
 
 ```swift
 else if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {

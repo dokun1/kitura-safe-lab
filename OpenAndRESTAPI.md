@@ -83,21 +83,24 @@ For this request, we want to find the percentage of people that have been regist
 2. Implement a public `getSafeConnections` function in `WebsocketService.swift`, that returns a percentage of the safe connected people, beneath your `getAllConnections` function
 
   ```swift
-  public func getSafeConnections() -> Double? {
+  public func getSafeConnections() -> DoubleStructure? {
+
+        var percentageSafeStructure = DoubleStructure(doubleValue: 0.0)
 
         var percentNumber = 100/Double(connectedPeople.count)
-        var safeNumber = 0.00
+        var safeNumber = 0.0
         for person in connectedPeople {
 
-            safeNumber = 0
-            if person.status.rawValue == "safe" {
-                safeNumber += 1
+            safeNumber = 0.0
+            if person.status.rawValue == "Safe" {
+                safeNumber += 1.0
             }
 
         }
-
         var percentageSafe = percentNumber*safeNumber
-        return percentageSafe
+        percentageSafeStructure.doubleValue = percentageSafe
+        print(percentageSafe)
+        return percentageSafeStructure
 
     }
   ```
@@ -105,47 +108,7 @@ For this request, we want to find the percentage of people that have been regist
    Add the following as a function in the App class:
 
   ```swift
-  func getSafeHandler(completion: (Double?, RequestError?) -> Void ) {
-    return completion(disasterService.getSafeConnections(), nil)
-  }
-  ```
-4. Refresh SwaggerUI again and view your new GET route.
-
-## Add Support for handling a `GET` request on `/danger`
-
-For this request, we want to find the percentage of people that have been registered safe to the server.
-
-1. Register a handler for a `GET` request on `/safe` that loads the data  
-   Add the following into the `postInit()` function:  
-   ```swift
-	router.get("/safe", handler: getSafeHandler)
-   ```
-2. Implement a public `getSafeConnections` function in `WebsocketService.swift`, that returns a percentage of the safe connected people, beneath your `getAllConnections` function
-
-  ```swift
-  public func getSafeConnections() -> Double? {
-
-        var percentNumber = 100/Double(connectedPeople.count)
-        var safeNumber = 0.00
-        for person in connectedPeople {
-
-            safeNumber = 0
-            if person.status.rawValue == "safe" {
-                safeNumber += 1
-            }
-
-        }
-
-        var percentageSafe = percentNumber*safeNumber
-        return percentageSafe
-
-    }
-  ```
-3.  Implement the `getSafeHandler()` that responds with all of the stored ToDo items as an array.      
-   Add the following as a function in the App class:
-
-  ```swift
-  func getSafeHandler(completion: (Double?, RequestError?) -> Void ) {
+  func getSafeHandler(completion: (DoubleStructure?, RequestError?) -> Void ) {
     return completion(disasterService.getSafeConnections(), nil)
   }
   ```

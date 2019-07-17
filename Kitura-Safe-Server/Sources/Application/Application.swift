@@ -7,6 +7,7 @@ import KituraContracts
 import Health
 import KituraOpenAPI
 import KituraWebSocket
+import TypeDecoder
 
 public let projectPath = ConfigurationManager.BasePath.project.path
 public let health = Health()
@@ -25,12 +26,10 @@ public class App {
     func postInit() throws {
         // Endpoints
         initializeHealthRoutes(app: self)
-        KituraOpenAPI.addEndpoints(to: router)
         WebSocket.register(service: disasterService, onPath: "/disaster")
-        router.get("/", handler: getAllHandler)
+        router.get("/users", handler: getAllHandler)
         router.get("/safe", handler: percentageSafeHandler)
-        router.get("/danger", handler: percentageDangerHandler)
-        router.get("/unknown", handler: percentageUnknownHandler)
+        router.get("/users", handler: getOneHandler)
     }
     
     func getAllHandler(completion: ([Person]?, RequestError?) -> Void ) {
@@ -39,15 +38,15 @@ public class App {
         
     }
     
-    func percentageSafeHandler(completion: (Double?, RequestError?) -> Void ) {
+    func getOneHandler(id: Int, completion:(Person?, RequestError?) -> Void ) {
+        
+
         
     }
     
-    func percentageDangerHandler(completion: (Double?, RequestError?) -> Void ) {
+    func percentageSafeHandler(completion: (DoubleStructure?, RequestError?) -> Void ) {
         
-    }
-    
-    func percentageUnknownHandler(completion: (Double?, RequestError?) -> Void ) {
+        return completion(disasterService.getSafeConnections(), nil)
         
     }
 
@@ -56,5 +55,12 @@ public class App {
         KituraOpenAPI.addEndpoints(to: router)
         Kitura.addHTTPServer(onPort: cloudEnv.port, with: router)
         Kitura.run()
+    }
+}
+
+extension Safety: ValidSingleCodingValueProvider {
+    public static func validCodingValue() -> Any? {
+        // Returns the string "Unreported"
+        return self.unreported.rawValue
     }
 }

@@ -26,21 +26,24 @@ class DisasterSocketService: WebSocketService {
         
     }
     
-    public func getSafeConnections() -> Double? {
+    public func getSafeConnections() -> DoubleStructure? {
+        
+        var percentageSafeStructure = DoubleStructure(doubleValue: 0.0)
         
         var percentNumber = 100/Double(connectedPeople.count)
-        var safeNumber = 0.00
+        var safeNumber = 0.0
         for person in connectedPeople {
             
-            safeNumber = 0
-            if person.status.rawValue == "safe" {
-                safeNumber += 1
+            safeNumber = 0.0
+            if person.status.rawValue == "Safe" {
+                safeNumber += 1.0
             }
         
         }
-        
         var percentageSafe = percentNumber*safeNumber
-        return percentageSafe
+        percentageSafeStructure.doubleValue = percentageSafe
+        print(percentageSafe)
+        return percentageSafeStructure
         
     }
     
