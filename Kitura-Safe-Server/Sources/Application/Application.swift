@@ -25,6 +25,7 @@ public class App {
     func postInit() throws {
         // Endpoints
         initializeHealthRoutes(app: self)
+        KituraOpenAPI.addEndpoints(to: router)
         WebSocket.register(service: disasterService, onPath: "/disaster")
         router.get("/all", handler: getAllHandler)
         router.get("/safe", handler: percentageSafeHandler)
