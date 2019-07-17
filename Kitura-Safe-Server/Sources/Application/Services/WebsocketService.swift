@@ -20,9 +20,9 @@ class DisasterSocketService: WebSocketService {
     private var dashboardConnection: Dashboard?
     private var connectedPeople = [Person]()
     
-    public func getAllConnections() -> Int {
+    public func getAllConnections() -> [Person]? {
         
-        return connectedPeople.count
+        return connectedPeople
         
     }
     

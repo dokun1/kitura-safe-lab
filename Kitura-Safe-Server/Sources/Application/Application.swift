@@ -27,13 +27,13 @@ public class App {
         initializeHealthRoutes(app: self)
         KituraOpenAPI.addEndpoints(to: router)
         WebSocket.register(service: disasterService, onPath: "/disaster")
-        router.get("/all", handler: getAllHandler)
+        router.get("/", handler: getAllHandler)
         router.get("/safe", handler: percentageSafeHandler)
         router.get("/danger", handler: percentageDangerHandler)
         router.get("/unknown", handler: percentageUnknownHandler)
     }
     
-    func getAllHandler(completion: (Int?, RequestError?) -> Void ) {
+    func getAllHandler(completion: ([Person]?, RequestError?) -> Void ) {
         
         return completion(disasterService.getAllConnections(), nil)
         
