@@ -199,4 +199,4 @@ Follow these steps in order:
 
 # Next Steps
 
-Continue to the [next page](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md) to learn how to use Docker and Kubernetes.
+Continue to the [next page](https://github.com/dokun1/kitua-safe-lab/blob/master/DashboardSetUp.md) to learn how to use Open API and REST API.

@@ -26,6 +26,24 @@ class DisasterSocketService: WebSocketService {
         
     }
     
+    public func getSafeConnections() -> Double? {
+        
+        var percentNumber = 100/Double(connectedPeople.count)
+        var safeNumber = 0.00
+        for person in connectedPeople {
+            
+            safeNumber = 0
+            if person.status.rawValue == "safe" {
+                safeNumber += 1
+            }
+        
+        }
+        
+        var percentageSafe = percentNumber*safeNumber
+        return percentageSafe
+        
+    }
+    
     func connected(connection: WebSocketConnection) {
         Log.info("connection established: \(connection)")
         allConnections.append(connection)
