@@ -10,7 +10,7 @@ ARG bx_dev_user=root
 ARG bx_dev_userid=1000
 
 # Install system level packages
-# RUN apt-get update && apt-get dist-upgrade -y
+RUN sudo apt-get update && apt-get install -y libpq-dev
 
 # Add utils files
 ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/master/utils/run-utils.sh /swift-utils/run-utils.sh
