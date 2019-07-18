@@ -26,24 +26,65 @@ class DisasterSocketService: WebSocketService {
         
     }
     
-    public func getSafeConnections() -> DoubleStructure? {
+    public func getOnePerson(id: String) -> Person? {
         
-        var percentageSafeStructure = DoubleStructure(doubleValue: 0.0)
+        for person in connectedPeople {
         
-        var percentNumber = 100/Double(connectedPeople.count)
+            if person.id == id {
+                
+                return person
+                
+            }
+            
+        }
+        
+        return nil
+        
+    }
+    
+    public func getStats() -> StatsStructure? {
+        
+        let date: Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
+        let currentDate = dateFormatter.string(from: date)
+        
+        var currentStatsStructure = StatsStructure(safePercentage: 0.0, unsafePercentage: 0.0, unreportedPercentage: 0.0, startTime: startDate, currentTime: currentDate)
+        
+        if connectedPeople.count>0 {
+        
+        let percentNumber = 100/Double(connectedPeople.count)
         var safeNumber = 0.0
+        var unsafeNumber = 0.0
+        var unreportedNumber = 0.0
         for person in connectedPeople {
             
-            safeNumber = 0.0
             if person.status.rawValue == "Safe" {
                 safeNumber += 1.0
             }
+            
+            else if person.status.rawValue == "Unsafe" {
+                unsafeNumber += 1.0
+            }
+            
+            else {
+                unreportedNumber += 1.0
+            }
         
         }
-        var percentageSafe = percentNumber*safeNumber
-        percentageSafeStructure.doubleValue = percentageSafe
-        print(percentageSafe)
-        return percentageSafeStructure
+        
+        let percentageSafe = percentNumber*safeNumber
+        currentStatsStructure.safePercentage = percentageSafe
+        
+        let percentageUnsafe = percentNumber*unsafeNumber
+        currentStatsStructure.unsafePercentage = percentageUnsafe
+        
+        let percentageUnreported = percentNumber*safeNumber
+        currentStatsStructure.unreportedPercentage = percentageUnreported
+            
+        }
+        
+        return currentStatsStructure
         
     }
     

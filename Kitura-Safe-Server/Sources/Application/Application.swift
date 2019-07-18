@@ -12,6 +12,8 @@ import TypeDecoder
 public let projectPath = ConfigurationManager.BasePath.project.path
 public let health = Health()
 
+public var startDate = String()
+
 public class App {
     weak var delegate: WebSocketService?
     let router = Router()
@@ -25,11 +27,16 @@ public class App {
 
     func postInit() throws {
         // Endpoints
+        let date: Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
+        startDate = dateFormatter.string(from: date)
+        
         initializeHealthRoutes(app: self)
         WebSocket.register(service: disasterService, onPath: "/disaster")
         router.get("/users", handler: getAllHandler)
-        router.get("/safe", handler: percentageSafeHandler)
         router.get("/users", handler: getOneHandler)
+        router.get("/stats", handler: getStatsHandler)
     }
     
     func getAllHandler(completion: ([Person]?, RequestError?) -> Void ) {
@@ -38,15 +45,15 @@ public class App {
         
     }
     
-    func getOneHandler(id: Int, completion:(Person?, RequestError?) -> Void ) {
+    func getOneHandler(id: String, completion:(Person?, RequestError?) -> Void ) {
         
-
+        return completion(disasterService.getOnePerson(id: id), nil)
         
     }
     
-    func percentageSafeHandler(completion: (DoubleStructure?, RequestError?) -> Void ) {
+    func getStatsHandler(completion: (StatsStructure?, RequestError?) -> Void ) {
         
-        return completion(disasterService.getSafeConnections(), nil)
+        return completion(disasterService.getStats(), nil)
         
     }
 

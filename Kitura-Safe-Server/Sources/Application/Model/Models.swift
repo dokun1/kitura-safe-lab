@@ -49,8 +49,12 @@ struct RegistrationToken: Codable {
     var tokenID: String
 }
 
-struct DoubleStructure: Codable {
-    var doubleValue: Double
+struct StatsStructure: Codable {
+    var safePercentage: Double
+    var unsafePercentage: Double
+    var unreportedPercentage: Double
+    var startTime: String
+    var currentTime: String
 }
 
 
