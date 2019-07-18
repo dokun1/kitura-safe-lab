@@ -47,11 +47,11 @@ extension ViewController: DisasterSocketClientDelegate {
             }
             let alert = UIAlertController(title: "DISASTER!!!", message: "Oh no! \(disaster.name) in your area!! Are you safe?", preferredStyle: .alert)
             let safeAction = UIAlertAction(title: "Yes", style: .default, handler: { action in
-                person.status = .safe
+                person.status.status = "Safe"
                 client.reportStatus(for: person)
             })
             let unsafeAction = UIAlertAction(title: "No", style: .destructive, handler: { action in
-                person.status = .unsafe
+                person.status.status = "Unsafe"
                 client.reportStatus(for: person)
             })
             alert.addAction(safeAction)
@@ -74,7 +74,7 @@ extension ViewController: DisasterSocketClientDelegate {
                     print("could not get name from alert controller")
                     return
                 }
-                let person = Person(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), name: name, id: token.tokenID, status: .unreported)
+                let person = Person(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), name: name, id: token.tokenID, status: Safety(status: "Unreported"))
                 self.currentPerson = person
                 client.reportStatus(for: person)
             }

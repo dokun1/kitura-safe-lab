@@ -64,10 +64,3 @@ public class App {
         Kitura.run()
     }
 }
-
-extension Safety: ValidSingleCodingValueProvider {
-    public static func validCodingValue() -> Any? {
-        // Returns the string "Unreported"
-        return self.unreported.rawValue
-    }
-}

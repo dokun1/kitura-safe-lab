@@ -44,24 +44,22 @@ extension ViewController: DisasterSocketClientDelegate {
     func statusReported(client: DisasterSocketClient, person: Person) {
         annotationProcessingQueue.sync {
             let coordinate = CLLocationCoordinate2D(latitude: person.coordinate.latitude, longitude: person.coordinate.longitude)
-            switch person.status {
-            case .unreported:
+            if person.status.status == "Unreported" {
                 let newAnnotation = UnreportedPersonAnnotation(coordinate: coordinate, person: person)
                 self.annotations.append(newAnnotation)
                 drop(newAnnotation)
-                break
-            case .safe:
+            }
+            else if person.status.status == "Safe" {
                 removeDuplicateAnnotations(for: person)
                 let newAnnotation = SafePersonAnnotation(coordinate: coordinate, person: person)
                 self.annotations.append(newAnnotation)
                 drop(newAnnotation)
-                break
-            case .unsafe:
+            }
+            else if person.status.status == "Unsafe" {
                 removeDuplicateAnnotations(for: person)
                 let newAnnotation = UnsafePersonAnnotation(coordinate: coordinate, person: person)
                 self.annotations.append(newAnnotation)
                 drop(newAnnotation)
-                break
             }
         }
     }

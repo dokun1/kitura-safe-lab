@@ -49,10 +49,9 @@ REST APIs typically consist of an HTTP request using a verb such as `POST`, `PUT
 
 A request to load all of the stored data typically consists of a `GET` request with no data, which the server then handles and responds with an array of all the data in the store.
 
-1. Register a handler for a `GET` request on `/` that loads the data  
-   Add the following into the `postInit()` function:  
+1. Register a handler for a `GET` request on `/users` that loads the data.  Add the following into the `postInit()` function:  
    ```swift
-	router.get("/", handler: getAllHandler)
+	router.get("/users", handler: getAllHandler)
    ```
 2. Implement a public `getAllConnections` function in `WebsocketService.swift` that returns an array of the connected people above the `connceted` function
 
@@ -61,8 +60,7 @@ A request to load all of the stored data typically consists of a `GET` request w
         return connectedPeople
     }
   ```
-3.  Implement the `getAllHandler()` that responds with all of the connected people as an array.      
-   Add the following as a function in the App class:
+3.  Implement the `getAllHandler()` that responds with all of the connected people as an array.  Add the following as a function in the App class:
 
   ```swift
   func getAllHandler(completion: ([Person]?, RequestError?) -> Void ) {
@@ -73,87 +71,128 @@ A request to load all of the stored data typically consists of a `GET` request w
 
 ## Add Support for handling a `GET` request on `/users:id`
 
-For this request, we want to find the person class on a specific id of a user
+For this request, we want to find the return all the info on a specific user by using their unique id
 
-1. Register a handler for a `GET` request on `/safe` that loads the data  
-   Add the following into the `postInit()` function:  
+1. Register a handler for a `GET` request on `/users` that loads the data.  Add the following into the `postInit()` function:  
    ```swift
-	router.get("/safe", handler: getSafeHandler)
+	router.get("/users", handler: getOneHandler)
    ```
 2. Implement a public `getSafeConnections` function in `WebsocketService.swift`, that returns a percentage of the safe connected people, beneath your `getAllConnections` function
 
   ```swift
-  public func getSafeConnections() -> DoubleStructure? {
+  public func getOnePerson(id: String) -> Person? {
 
-        var percentageSafeStructure = DoubleStructure(doubleValue: 0.0)
-
-        var percentNumber = 100/Double(connectedPeople.count)
-        var safeNumber = 0.0
         for person in connectedPeople {
-
-            safeNumber = 0.0
-            if person.status.rawValue == "Safe" {
-                safeNumber += 1.0
+            if person.id == id {
+                return person
             }
-
         }
-        var percentageSafe = percentNumber*safeNumber
-        percentageSafeStructure.doubleValue = percentageSafe
-        print(percentageSafe)
-        return percentageSafeStructure
-
+        return nil
     }
   ```
-3.  Implement the `getSafeHandler()` that responds with all of the stored ToDo items as an array.      
-   Add the following as a function in the App class:
+3.  Implement the `getOneHandler()` that takes a String that is the person's specific id and responds with all the data associated with that user.  Add the following as a function in the App class:
 
   ```swift
-  func getSafeHandler(completion: (DoubleStructure?, RequestError?) -> Void ) {
-    return completion(disasterService.getSafeConnections(), nil)
-  }
+  func getOneHandler(id: String, completion:(Person?, RequestError?) -> Void ) {
+        return completion(disasterService.getOnePerson(id: id), nil)
+    }
   ```
 4. Refresh SwaggerUI again and view your new GET route.
 
 ## Add Support for handling a `GET` request on `/stats`
 
-For this request, we want to find the percentage of people that have been registered safe to the server.
+For this request, we want to find several statistics about the server. We will display:
 
-1. Register a handler for a `GET` request on `/safe` that loads the data  
+* The start time of the server
+* The current time
+* The percentage of connected users safe*
+* The percentage of connected users unsafe
+* The percentage of connected users unreported
+
+1. Register a handler for a `GET` request on `/stats` that loads the data  
    Add the following into the `postInit()` function:  
    ```swift
-	router.get("/safe", handler: getSafeHandler)
+	router.get("/stats", handler: getStatsHandler)
    ```
-2. Implement a public `getSafeConnections` function in `WebsocketService.swift`, that returns a percentage of the safe connected people, beneath your `getAllConnections` function
+2. Create a global variable in `Application.swift` outside the scope of the App class that stores the time of the server when launched:
+   ```swift
+   public var startDate = String()
+   ```
+   Then at the start of the `postInit()` method, add:
+   ```swift
+   let date: Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
+        startDate = dateFormatter.string(from: date)
+   ```
+
+3. Create a Codable structure in `Models.swift` that holds all the values we need for our statistics:
+
+```swift
+struct StatsStructure: Codable {
+    var safePercentage: Double
+    var unsafePercentage: Double
+    var unreportedPercentage: Double
+    var startTime: String
+    var currentTime: String
+}
+```
+
+4. Implement a public `getStats` function in `WebsocketService.swift`, that returns all the statistics we need for our server:
 
   ```swift
-  public func getSafeConnections() -> DoubleStructure? {
+  public func getStats() -> StatsStructure? {
 
-        var percentageSafeStructure = DoubleStructure(doubleValue: 0.0)
+        let date: Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
+        let currentDate = dateFormatter.string(from: date)
 
-        var percentNumber = 100/Double(connectedPeople.count)
+        var currentStatsStructure = StatsStructure(safePercentage: 0.0, unsafePercentage: 0.0, unreportedPercentage: 0.0, startTime: startDate, currentTime: currentDate)
+
+        if connectedPeople.count>0 {
+
+        let percentNumber = 100/Double(connectedPeople.count)
         var safeNumber = 0.0
+        var unsafeNumber = 0.0
+        var unreportedNumber = 0.0
         for person in connectedPeople {
 
-            safeNumber = 0.0
-            if person.status.rawValue == "Safe" {
+            if person.status.status == "Safe" {
                 safeNumber += 1.0
             }
 
+            else if person.status.status == "Unsafe" {
+                unsafeNumber += 1.0
+            }
+
+            else {
+                unreportedNumber += 1.0
+            }
+
         }
-        var percentageSafe = percentNumber*safeNumber
-        percentageSafeStructure.doubleValue = percentageSafe
-        print(percentageSafe)
-        return percentageSafeStructure
+
+        let percentageSafe = percentNumber*safeNumber
+        currentStatsStructure.safePercentage = percentageSafe
+
+        let percentageUnsafe = percentNumber*unsafeNumber
+        currentStatsStructure.unsafePercentage = percentageUnsafe
+
+        let percentageUnreported = percentNumber*safeNumber
+        currentStatsStructure.unreportedPercentage = percentageUnreported
+
+        }
+
+        return currentStatsStructure
 
     }
   ```
-3.  Implement the `getSafeHandler()` that responds with all of the stored ToDo items as an array.      
-   Add the following as a function in the App class:
+5.  Implement the `getStatsHandler()` that responds with all the data retrieved from our DisasterSocket.  Add the following as a function in the App class:
 
   ```swift
-  func getSafeHandler(completion: (DoubleStructure?, RequestError?) -> Void ) {
-    return completion(disasterService.getSafeConnections(), nil)
-  }
+  func getStatsHandler(completion: (StatsStructure?, RequestError?) -> Void ) {
+        return completion(disasterService.getStats(), nil)
+    }
   ```
 4. Refresh SwaggerUI again and view your new GET route.
 

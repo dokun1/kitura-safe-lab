@@ -27,19 +27,13 @@ class DisasterSocketService: WebSocketService {
     }
     
     public func getOnePerson(id: String) -> Person? {
-        
+
         for person in connectedPeople {
-        
             if person.id == id {
-                
                 return person
-                
             }
-            
         }
-        
         return nil
-        
     }
     
     public func getStats() -> StatsStructure? {
@@ -59,11 +53,11 @@ class DisasterSocketService: WebSocketService {
         var unreportedNumber = 0.0
         for person in connectedPeople {
             
-            if person.status.rawValue == "Safe" {
+            if person.status.status == "Safe" {
                 safeNumber += 1.0
             }
             
-            else if person.status.rawValue == "Unsafe" {
+            else if person.status.status == "Unsafe" {
                 unsafeNumber += 1.0
             }
             
@@ -119,7 +113,7 @@ class DisasterSocketService: WebSocketService {
     
     private func parse(_ data: Data, for connection: WebSocketConnection) {
         if let person = try? JSONDecoder().decode(Person.self, from: data) {
-            Log.info("person status reported: \(person.name) is \(person.status.rawValue)")
+            Log.info("person status reported: \(person.name) is \(person.status.status)")
             reportStatus(for: person)
         } else if let disaster = try? JSONDecoder().decode(Disaster.self, from: data) {
             Log.info("disaster occurred! \(disaster.name) at (\(disaster.coordinate.latitude), \(disaster.coordinate.longitude))")
