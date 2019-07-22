@@ -10,7 +10,7 @@ ARG bx_dev_user=root
 ARG bx_dev_userid=1000
 
 # Install system level packages
-RUN sudo apt-get update && apt-get install -y libpq-dev
+# RUN apt-get update && apt-get dist-upgrade -y
 
 # Add utils files
 ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/master/utils/run-utils.sh /swift-utils/run-utils.sh
@@ -24,4 +24,4 @@ RUN if [ $bx_dev_user != "root" ]; then useradd -ms /bin/bash -u $bx_dev_userid 
 COPY . /swift-project
 
 # Command to start Swift application
-CMD [ "sh", "-c", "cd /swift-project && .build-ubuntu/release/Kitura-Safe-Server" ]
+CMD [ "sh", "-c", "cd /swift-project && .build-ubuntu/release/kitura-safe-server" ]

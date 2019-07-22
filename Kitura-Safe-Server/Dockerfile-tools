@@ -10,7 +10,7 @@ ARG bx_dev_user=root
 ARG bx_dev_userid=1000
 
 # Install system level packages
-RUN sudo apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && apt-get dist-upgrade -y
 
 # Add utils files
 ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/master/utils/tools-utils.sh /swift-utils/tools-utils.sh
@@ -28,3 +28,5 @@ RUN echo "$bx_dev_user ALL=NOPASSWD: ALL" > /etc/sudoers.d/user && \
 
 # Bundle application source & binaries
 COPY . /swift-project
+
+CMD env KITURA_NIO=1 /swift-utils/tools-utils.sh build release
