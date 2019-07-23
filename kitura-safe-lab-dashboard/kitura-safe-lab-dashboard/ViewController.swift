@@ -98,7 +98,7 @@ extension ViewController: DisasterSocketClientDelegate {
 }
 
 extension ViewController: DisasterSegueConfirmationViewControllerDelegate {
-    func disasterSegueConfirmationViewControllerDidConfirmDisasterName(controller: DisasterSegueConfirmationViewController, name: String) {
+    func vcConfDisasterName(controller: DisasterSegueConfirmationViewController, name: String) {
         controller.dismiss(nil)
         guard let location = mapView?.userLocation.coordinate else {
             return

@@ -10,7 +10,7 @@ import Foundation
 import AppKit
 
 protocol DisasterSegueConfirmationViewControllerDelegate: class {
-    func disasterSegueConfirmationViewControllerDidConfirmDisasterName(controller: DisasterSegueConfirmationViewController, name: String)
+    func vcConfDisasterName(controller: DisasterSegueConfirmationViewController, name: String)
 }
 
 class DisasterSegueConfirmationViewController: NSViewController {
@@ -21,6 +21,6 @@ class DisasterSegueConfirmationViewController: NSViewController {
         guard let text = textField?.stringValue else {
             return
         }
-        delegate?.disasterSegueConfirmationViewControllerDidConfirmDisasterName(controller: self, name: text)
+        delegate?.vcConfDisasterName(controller: self, name: text)
     }
 }

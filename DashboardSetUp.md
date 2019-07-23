@@ -44,6 +44,7 @@ class DisasterSocketClient {
 
 }
 ```
+***Starscream is a WebSocket library for iOS and  macOS, we use it so that we can connect to the server from the clients***
 
 This stubs out what you need to set up a WebSocket client in your macOS app. This might look familiar when you start working with your iOS client, but you will notice a couple of key differences.
 

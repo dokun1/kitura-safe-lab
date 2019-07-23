@@ -50,7 +50,7 @@ do {
 }
 ```
 
-By now, you are handling the registration of a person, storing their status, and sending that registration onto the dashboard. Open your mac dashboard application, and open `DisasterSocketClient.swift`. Add this decode logic to the `parse:` function:
+By now, you are handling the registration of a person, storing their status, and sending that registration onto the dashboard. Open your macOS dashboard application, and open `DisasterSocketClient.swift`. Add this decode logic to the `parse:` function:
 
 ```swift
 if let person = try? JSONDecoder().decode(Person.self, from: data) {
@@ -84,7 +84,7 @@ annotationProcessingQueue.sync {
 }
 ```
 
-This does a lot of the MapKit work for you, but you can follow the logic to see what happens. For now, you are only really going to handle an unreported status. Lastly, add the following code inside your `removeDuplicateAnnotations:` function:
+This does a lot of the [MapKit](https://developer.apple.com/documentation/mapkit) work for you, but you can follow the logic to see what happens. For now, you are only really going to handle an unreported status. Lastly, add the following code inside your `removeDuplicateAnnotations:` function:
 
 ```swift
 let existingAnnotation = self.annotations.filter { $0.person?.id == person.id }
@@ -112,7 +112,7 @@ public func simulate(_ disaster: Disaster) {
 }
 ```
 
-Now you have the ability to report a disaster. Scroll to the succintly named `disasterSegueConfirmationViewControllerDidConfirmDisasterName:` function in `ViewController.swift` and add the following code after `dismiss()` is called:
+Now you have the ability to report a disaster. Scroll to the succintly named `vcConfDisasterName:` function in `ViewController.swift` and add the following code after `dismiss()` is called:
 
 ```swift
 guard let location = mapView?.userLocation.coordinate else {
