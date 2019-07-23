@@ -47,7 +47,7 @@ Enter the following into your Terminal:
 ```bash
 brew install kubernetes-helm
 ```
-**Note:** if you get an error at this stage referencing a URL containing `kube`, then you already have Kubernetes installed on your system and are now running with multiple contexts. For the purposes of this workshop, change to the `docker-for-desktop` Kubernetes context by accessing Docker's menubar dropdown (not preferences like before), going into Kubernetes and under context, `select docker-for-desktop`.
+**Note:** if you get an error at this stage referencing a URL containing `kube`, then you already have Kubernetes installed on your system and are now running with multiple contexts. For the purposes of this workshop, change to the `docker-for-desktop` Kubernetes context by accessing Docker's menubar dropdown (not preferences like before), going into Kubernetes and under context, `docker-for-desktop`.
 
 ![docker-context](./resources/docker-context.png)
 
@@ -57,7 +57,7 @@ In this section you will learn about adding repos to Helm.
 
 ### Background
 
-Our application is going to consist of one pod (Kubernetes Pods, not CocoaPods). In Kubernetes, a pod is typically one running Docker container, although a pod can contain multiple containers in some more complex scenarios.
+Our application is going to consist of one pod (Kubernetes Pod, not CocoaPod). In Kubernetes, a pod is typically one running Docker container, although a pod can contain multiple containers in some more complex scenarios.
 
 We are going to run our pod: which is for our Kitura server
 

@@ -25,7 +25,7 @@
 
 First, stop your server, let's add the ability to connect to it with a WebSocket connection.
 
-Open up the `WebsocketService.swift` file in the Services folder of your project, and add the following code underneath your import statement for `Foundation`:
+Open up the `MyWebSocketService.swift` file in the Services folder of your project, and add the following code underneath your import statement for `Foundation`:
 
 ```swift
 import KituraWebSocket
@@ -83,7 +83,7 @@ curl --include \
 
 Check the logs of your server, and you should see that a connection was established. Hit ctrl+c to quit, and continue.
 
-Next, go back to `WebsocketService.swift` and add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
+Next, go back to `MyWebSocketService.swift` and add the following three stored properties inside the top of your `DisasterSocketService` class declaration:
 
 ```swift
 private var allConnections = [WebSocketConnection]()

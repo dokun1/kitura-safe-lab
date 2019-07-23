@@ -172,7 +172,7 @@ Make sure your server is running. Build and run your macOS dashboard, and accept
 ## Using WebSockets to authenticate connections
 
 
-Open up your server, and open `WebsocketService.swift`. Scroll to your `connected:` function, and remember that you are using a model object to verify that the dashboard should hang onto an id. In a second, you're going to go back to your dashboard and add code to handle the receipt of this token, but first, also notice that, whenever you receive a payload of type `Data` over your connection, you have a function to check what type of object it can be decoded into, and you act accordingly. Now let's make sure that your dashboard responds appropriately when you receive a registration token from the server.
+Open up your server, and open `MyWebSocketService.swift`. Scroll to your `connected:` function, and remember that you are using a model object to verify that the dashboard should hang onto an id. In a second, you're going to go back to your dashboard and add code to handle the receipt of this token, but first, also notice that, whenever you receive a payload of type `Data` over your connection, you have a function to check what type of object it can be decoded into, and you act accordingly. Now let's make sure that your dashboard responds appropriately when you receive a registration token from the server.
 
 Open your dashboard and go back to `DisasterSocketClient.swift`. Scroll to your `websocketDidReceiveData` function and add this:
 

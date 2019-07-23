@@ -43,17 +43,17 @@ and a Response Code of 200.
 
 Congratulations, you have added OpenAPI support to your Kitura application and used SwaggerUI to query a REST API!
 
-## Add Support for handling a GET request on `/users`
+## Add Support for handling a `GET` request on `/users`
 
 REST APIs typically consist of an HTTP request using a verb such as `POST`, `PUT`, `GET` or `DELETE` along with a URL and an optional data payload. The server then handles the request and responds with an optional data payload.
 
 A request to load all of the stored data typically consists of a `GET` request with no data, which the server then handles and responds with an array of all the data in the store.
 
-1. Register a handler for a `GET` request on `/users` that loads the data.  Add the following into the `postInit()` function:  
+1. Register a handler for a `GET` request on `/users` that loads the data.  Add the following into the `postInit()` function of the `Application.swift` file in the `kitura-safe-server` directory:  
    ```swift
 	router.get("/users", handler: getAllHandler)
    ```
-2. Implement a public `getAllConnections` function in `WebsocketService.swift` that returns an array of the connected people above the `connceted` function
+2. Implement a public `getAllConnections` function in `MyWebSocketService.swift` that returns an array of the connected people above the `connected` function
 
   ```swift
   public func getAllConnections() -> [Person]? {
@@ -71,13 +71,13 @@ A request to load all of the stored data typically consists of a `GET` request w
 
 ## Add Support for handling a `GET` request on `/users:id`
 
-For this request, we want to find the return all the info on a specific user by using their unique id
+For this request, we want to return all the info on a specific user by using their unique id
 
 1. Register a handler for a `GET` request on `/users` that loads the data.  Add the following into the `postInit()` function:  
    ```swift
 	router.get("/users", handler: getOneHandler)
    ```
-2. Implement a public `getSafeConnections` function in `WebsocketService.swift`, that returns a percentage of the safe connected people, beneath your `getAllConnections` function
+2. Implement a public `getOnePerson` function in `MyWebSocketService.swift`, that returns a Person object, beneath your `getAllConnections` function
 
   ```swift
   public func getOnePerson(id: String) -> Person? {
@@ -105,9 +105,9 @@ For this request, we want to find several statistics about the server. We will d
 
 * The start time of the server
 * The current time
-* The percentage of connected users safe*
-* The percentage of connected users unsafe
-* The percentage of connected users unreported
+* The percentage of connected users reported as safe
+* The percentage of connected users reported as unsafe
+* The percentage of connected users reported as unreported
 
 1. Register a handler for a `GET` request on `/stats` that loads the data  
    Add the following into the `postInit()` function:  
@@ -121,9 +121,9 @@ For this request, we want to find several statistics about the server. We will d
    Then at the start of the `postInit()` method, add:
    ```swift
    let date: Date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
-        startDate = dateFormatter.string(from: date)
+   let dateFormatter = DateFormatter()
+   dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
+   startDate = dateFormatter.string(from: date)
    ```
 
 3. Create a Codable structure in `Models.swift` that holds all the values we need for our statistics:
@@ -138,37 +138,38 @@ struct StatsStructure: Codable {
 }
 ```
 
-4. Implement a public `getStats` function in `WebsocketService.swift`, that returns all the statistics we need for our server:
+4. Implement a public `getStats` function in `MyWebSocketService.swift`, that returns all the statistics we need for our server:
 
   ```swift
   public func getStats() -> StatsStructure? {
 
-        let date: Date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
-        let currentDate = dateFormatter.string(from: date)
+    let date: Date = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
+    let currentDate = dateFormatter.string(from: date)
 
-        var currentStatsStructure = StatsStructure(safePercentage: 0.0, unsafePercentage: 0.0, unreportedPercentage: 0.0, startTime: startDate, currentTime: currentDate)
+    var currentStatsStructure = StatsStructure(safePercentage: 0.0, unsafePercentage: 0.0, unreportedPercentage: 0.0, startTime: startDate, currentTime: currentDate)
 
-        if connectedPeople.count>0 {
+    if connectedPeople.count>0 {
 
-        let percentNumber = 100/Double(connectedPeople.count)
-        var safeNumber = 0.0
-        var unsafeNumber = 0.0
-        var unreportedNumber = 0.0
-        for person in connectedPeople {
+      let percentNumber = 100/Double(connectedPeople.count)
+      var safeNumber = 0.0
+      var unsafeNumber = 0.0
+      var unreportedNumber = 0.0
 
-            if person.status.status == "Safe" {
-                safeNumber += 1.0
-            }
+      for person in connectedPeople {
 
-            else if person.status.status == "Unsafe" {
-                unsafeNumber += 1.0
-            }
+        if person.status.status == "Safe" {
+          safeNumber += 1.0
+        }
 
-            else {
-                unreportedNumber += 1.0
-            }
+        else if person.status.status == "Unsafe" {
+          unsafeNumber += 1.0
+        }
+
+        else {
+          unreportedNumber += 1.0
+        }
 
         }
 
@@ -187,17 +188,15 @@ struct StatsStructure: Codable {
 
     }
   ```
-5.  Implement the `getStatsHandler()` that responds with all the data retrieved from our DisasterSocket.  Add the following as a function in the App class:
+5.  Implement a `getStatsHandler()` that responds with all the data.  Add the following as a function in the App class:
 
   ```swift
   func getStatsHandler(completion: (StatsStructure?, RequestError?) -> Void ) {
         return completion(disasterService.getStats(), nil)
     }
   ```
-4. Refresh SwaggerUI again and view your new GET route.
+6. Refresh SwaggerUI again and view your new GET route.
 
 # Next Steps
-
-With this app, it only really serves purpose to use the `GET` methods of the API and display different statistics
 
 Continue to the [next page](https://github.com/dokun1/kitua-safe-lab/blob/master/DockerAndKubernetes.md) to learn how to use Docker and Kubernetes.
