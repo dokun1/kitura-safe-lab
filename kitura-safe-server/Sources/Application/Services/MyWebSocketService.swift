@@ -19,13 +19,13 @@ class DisasterSocketService: WebSocketService {
     private var allConnections = [WebSocketConnection]()
     private var dashboardConnection: Dashboard?
     private var connectedPeople = [Person]()
-    
+
     public func getAllConnections() -> [Person]? {
-        
+
         return connectedPeople
-        
+
     }
-    
+
     public func getOnePerson(id: String) -> Person? {
 
         for person in connectedPeople {
@@ -35,53 +35,53 @@ class DisasterSocketService: WebSocketService {
         }
         return nil
     }
-    
+
     public func getStats() -> StatsStructure? {
-        
+
         let date: Date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T 'HH:mm:ss"
         let currentDate = dateFormatter.string(from: date)
-        
+
         var currentStatsStructure = StatsStructure(safePercentage: 0.0, unsafePercentage: 0.0, unreportedPercentage: 0.0, startTime: startDate, currentTime: currentDate)
-        
+
         if connectedPeople.count>0 {
-        
+
         let percentNumber = 100/Double(connectedPeople.count)
         var safeNumber = 0.0
         var unsafeNumber = 0.0
         var unreportedNumber = 0.0
         for person in connectedPeople {
-            
+
             if person.status.status == "Safe" {
                 safeNumber += 1.0
             }
-            
+
             else if person.status.status == "Unsafe" {
                 unsafeNumber += 1.0
             }
-            
+
             else {
                 unreportedNumber += 1.0
             }
-        
+
         }
-        
+
         let percentageSafe = percentNumber*safeNumber
         currentStatsStructure.safePercentage = percentageSafe
-        
+
         let percentageUnsafe = percentNumber*unsafeNumber
         currentStatsStructure.unsafePercentage = percentageUnsafe
-        
+
         let percentageUnreported = percentNumber*safeNumber
         currentStatsStructure.unreportedPercentage = percentageUnreported
-            
+
         }
-        
+
         return currentStatsStructure
-        
+
     }
-    
+
     func connected(connection: WebSocketConnection) {
         Log.info("connection established: \(connection)")
         allConnections.append(connection)
@@ -91,7 +91,7 @@ class DisasterSocketService: WebSocketService {
             Log.error("Could not send registration token to connection \(connection.id): \(error.localizedDescription)")
         }
     }
-    
+
     func disconnected(connection: WebSocketConnection, reason: WebSocketCloseReasonCode) {
         Log.info("Connection dropped for \(connection.id), reason: \(reason)")
         if connection.id == dashboardConnection?.dashboardID {
@@ -100,17 +100,17 @@ class DisasterSocketService: WebSocketService {
         connectedPeople = connectedPeople.filter { $0.id != connection.id }
         allConnections = allConnections.filter { $0 != connection }
     }
-    
-    
+
+
     func received(message: Data, from: WebSocketConnection) {
         Log.info("data message received: \(String(describing: String(data: message, encoding: .utf8)))")
         parse(message, for: from)
     }
-    
+
     func received(message: String, from: WebSocketConnection) {
         Log.info("string message received: \(message)")
     }
-    
+
     private func parse(_ data: Data, for connection: WebSocketConnection) {
         if let person = try? JSONDecoder().decode(Person.self, from: data) {
             Log.info("person status reported: \(person.name) is \(person.status.status)")
@@ -123,7 +123,7 @@ class DisasterSocketService: WebSocketService {
             self.dashboardConnection = dashboard
         }
     }
-    
+
     private func reportStatus(for person: Person) {
         connectedPeople = connectedPeople.filter { $0.id != person.id }
         connectedPeople.append(person)
@@ -137,7 +137,7 @@ class DisasterSocketService: WebSocketService {
             Log.error("encountered error reporting status for person \(person.id): \(error.localizedDescription)")
         }
     }
-    
+
     private func notifyDevices(of disaster: Disaster) {
         guard let dashboardConnection = dashboardConnection else {
             return Log.error("no registered dashboard connection")

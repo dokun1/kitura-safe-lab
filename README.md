@@ -56,7 +56,7 @@ git clone -b starter https://github.com/dokun1/kitura-safe-lab.git
 2. Navigate to the `kitura-safe-server` directory.
 3. Type `ls` - if you see `Package.swift` in the resulting output, you are in the right place.
 4. Enter `export KITURA_NIO=1` into Terminal.
-5. Enter `swift package generate-xcodeproj` into Terminal, then `xed .` when the command is done.
+5. Enter `swift package generate-xcodeproj` into Terminal, then `xed .` when the command is done. ***`swift package generate-xcodeproj` generates all the necessary packages that our project uses and `xed .` opens our project in Xcode***
 6. In Xcode, run the server on My Mac.
 7. Open a web browser, and navigate to `localhost:8080`. If you see the Kitura home page, you are ready to go! Don't quit the server!
 
@@ -74,7 +74,7 @@ You also may need to turn off code signing on your Xcode. To do this:
 
 - go to `Build Settings` in your Xcode project
 - search "identity"
-- make sure you have black text entered for any identities
+- make sure you have an empty text box for identities
 
 ### Setting up the iOS client
 
