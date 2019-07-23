@@ -28,3 +28,5 @@ RUN echo "$bx_dev_user ALL=NOPASSWD: ALL" > /etc/sudoers.d/user && \
 
 # Bundle application source & binaries
 COPY . /swift-project
+
+CMD env KITURA_NIO=1 /swift-utils/tools-utils.sh build release

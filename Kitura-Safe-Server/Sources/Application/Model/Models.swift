@@ -7,16 +7,8 @@
 
 import Foundation
 
-enum Safety: String, Codable {
-    enum CodingKeys: String, CodingKey {
-        case unreported = "unreported"
-        case safe = "safe"
-        case unsafe = "unsafe"
-    }
-    
-    case unreported = "Unreported"
-    case safe = "Safe"
-    case unsafe = "Unsafe"
+struct Safety: Codable {
+    var status: String
 }
 
 struct Coordinate: Codable, Hashable {
@@ -28,7 +20,7 @@ struct Person: Codable, Hashable {
     static func == (lhs: Person, rhs: Person) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     var coordinate: Coordinate
     var name: String
     var id: String
