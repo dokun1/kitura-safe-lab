@@ -29,7 +29,7 @@ Now, go back to your server project. Open `WebsocketService.swift` and go to the
 
 ```swift
 if let person = try? JSONDecoder().decode(Person.self, from: data) {
-    Log.info("person status reported: \(person.name) is \(person.status.rawValue)")
+    Log.info("person status reported: \(person.name) is \(person.status.status)")
     reportStatus(for: person)
 }
 ```
@@ -63,26 +63,24 @@ Now, open `ViewController.swift` and find the delegate function for `statusRepor
 
 ```swift
 annotationProcessingQueue.sync {
-    let coordinate = CLLocationCoordinate2D(latitude: person.coordinate.latitude, longitude: person.coordinate.longitude)
-    switch person.status {
-    case .unreported:
-        let newAnnotation = UnreportedPersonAnnotation(coordinate: coordinate, person: person)
-        self.annotations.append(newAnnotation)
-        drop(newAnnotation)
-        break
-    case .safe:
-        removeDuplicateAnnotations(for: person)
-        let newAnnotation = SafePersonAnnotation(coordinate: coordinate, person: person)
-        self.annotations.append(newAnnotation)
-        drop(newAnnotation)
-        break
-    case .unsafe:
-        removeDuplicateAnnotations(for: person)
-        let newAnnotation = UnsafePersonAnnotation(coordinate: coordinate, person: person)
-        self.annotations.append(newAnnotation)
-        drop(newAnnotation)
-        break
-    }
+  let coordinate = CLLocationCoordinate2D(latitude: person.coordinate.latitude, longitude: person.coordinate.longitude)
+  if person.status.status == "Unreported" {
+    let newAnnotation = UnreportedPersonAnnotation(coordinate: coordinate, person: person)
+    self.annotations.append(newAnnotation)
+    drop(newAnnotation)
+  }
+  else if person.status.status == "Safe" {
+    removeDuplicateAnnotations(for: person)
+    let newAnnotation = SafePersonAnnotation(coordinate: coordinate, person: person)
+    self.annotations.append(newAnnotation)
+    drop(newAnnotation)
+  }
+  else if person.status.status == "Unsafe" {
+    removeDuplicateAnnotations(for: person)
+    let newAnnotation = UnsafePersonAnnotation(coordinate: coordinate, person: person)
+    self.annotations.append(newAnnotation)
+    drop(newAnnotation)
+  }
 }
 ```
 
@@ -164,23 +162,23 @@ Now, open `ViewController.swift` and add the following code inside the `clientRe
 
 ```swift
 DispatchQueue.main.async {
-    guard var person = self.currentPerson else {
-        print("no current person listed")
-        return
-    }
-    let alert = UIAlertController(title: "DISASTER!!!", message: "Oh no! \(disaster.name) in your area!! Are you safe?", preferredStyle: .alert)
-    let safeAction = UIAlertAction(title: "Yes", style: .default, handler: { action in
-        person.status = .safe
-        client.reportStatus(for: person)
+  guard var person = self.currentPerson else {
+    print("no current person listed")
+  return
+  }
+  let alert = UIAlertController(title: "DISASTER!!!", message: "Oh no! \(disaster.name) in your area!! Are you safe?", preferredStyle: .alert)
+  let safeAction = UIAlertAction(title: "Yes", style: .default, handler: { action in
+    person.status.status = "Safe"
+    client.reportStatus(for: person)
     })
-    let unsafeAction = UIAlertAction(title: "No", style: .destructive, handler: { action in
-        person.status = .unsafe
-        client.reportStatus(for: person)
+   let unsafeAction = UIAlertAction(title: "No", style: .destructive, handler: { action in
+     person.status.status = "Unsafe"
+     client.reportStatus(for: person)
     })
     alert.addAction(safeAction)
     alert.addAction(unsafeAction)
     self.present(alert, animated: true, completion: nil)
-}
+  }
 ```
 
 Save everything. You are now ready to test the entire flow!

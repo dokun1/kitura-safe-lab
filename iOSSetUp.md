@@ -175,24 +175,24 @@ Now go back to `ViewController.swift`, and find the `clientReceivedToken` functi
 
 ```swift
 DispatchQueue.main.async {
-    guard let currentLocation = self.locationManager?.lastLoggedLocation?.coordinate else {
-        return
+  guard let currentLocation = self.locationManager?.lastLoggedLocation?.coordinate else {
+    return
     }
     let alert = UIAlertController(title: "What is your name?", message: nil, preferredStyle: .alert)
     alert.addTextField { textField in
-        textField.placeholder = "Enter name here"
+      textField.placeholder = "Enter name here"
     }
     let saveAction = UIAlertAction(title: "Confirm", style: .default) { action in
-        guard let name = alert.textFields?.first?.text else {
-            print("could not get name from alert controller")
-            return
-        }
-        let person = Person(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), name: name, id: token.tokenID, status: .unreported)
-        self.currentPerson = person
-        client.reportStatus(for: person)
+      guard let name = alert.textFields?.first?.text else {
+      print("could not get name from alert controller")
+      return
     }
-    alert.addAction(saveAction)
-    self.present(alert, animated: true, completion: nil)
+    let person = Person(coordinate: Coordinate(latitude: currentLocation.latitude, longitude: currentLocation.longitude), name: name, id: token.tokenID, status: Safety(status: "Unreported"))
+    self.currentPerson = person
+    client.reportStatus(for: person)
+  }
+  alert.addAction(saveAction)
+  self.present(alert, animated: true, completion: nil)
 }
 ```
 
