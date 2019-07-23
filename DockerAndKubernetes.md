@@ -83,20 +83,6 @@ In this section you will learn how to:
 - Create a run Docker image for running your application
 - Tag the run image so it can be installed into Kubernetes
 
-### Modify your Dockerfile and Dockerfile-tools
-
-We are now ready to compile your code and create a Docker image, ready to deploy to Kubernetes. You already have a basic `Dockerfile`, but we need to add the system libraries for our Swift project to use. Open up `Dockerfile` and change the line:
-
-```
-# RUN apt-get update && apt-get dist-upgrade -y
-```
-to the following. Make sure to remove the # comment in front of `RUN`
-```dockerfile
-RUN sudo apt-get update && apt-get install -y libpq-dev
-```
-
-Repeat the same for `Dockerfile-tools`. When you have completed this, we can build our images.
-
 ### Building your images
 
 Now we are going to build our Kitura application into a Docker image. This will involve two Docker images: a "build" image and a "run" image. Why are there two? Because it is best practice to make Docker images as small as possible, and while we will need the Swift compiler to build our application, we won't need the compiler to run it!
@@ -108,7 +94,7 @@ docker build -t server-build -f Dockerfile-tools .
 ```
 We now run the build image, which compiles our Kitura application in Docker. This creates the Linux binaries, and saves them to our Mac.
 ```
-docker run -v $PWD:/swift-project -w /swift-project server-build /swift-utils/tools-utils.sh build release
+docker run -v $PWD:/swift-project -w /swift-project server-build
 ```
 Now it's time to build the "run" image containing our compiled Kitura application, but not the Swift compiler etc. This image could then be uploaded to a container registry such as Docker Hub if we wanted to do so.
 ```
@@ -164,11 +150,11 @@ Now everything is up and running! To access the database, we will use the OpenAP
 We can't navigate to `localhost:8080` as usual because our cluster isn't part of the localhost network. Port forwarding is built into the `kubectl` tools, and allows us to access our application from a browser as usual.
 
 ```bash
-kubectl get pods #Copy the todoserver NAME
-kubectl port-forward todoserver-deployment-XXXXXX-XXXXX 8080:8080
+kubectl get pods #Copy the kiturasafeserver NAME
+kubectl port-forward kiturasafeserver-deployment-XXXXXX-XXXXX 8080:8080
 ```
 
-We can now open a browser, and go to [localhost:8080/openapi/ui](localhost:8080/openapi/ui) where the OpenAPI dashboard should display. Using the drop down menus, select `GET /users` and the response should `200` and the Response Body should contain the connections currently on the server. Kitura is running in Docker under Kubernetes, and accessing the PostgreSQL database running in a separate Docker container!
+We can now open a browser, and go to [localhost:8080/openapi/ui](localhost:8080/openapi/ui) where the OpenAPI dashboard should display. Using the drop down menus, select `GET /users` and the response should `200` and the Response Body should contain the connections currently on the server. Kitura is running in Docker under Kubernetes!
 
 ## Next Steps
 
