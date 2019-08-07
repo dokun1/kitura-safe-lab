@@ -16,7 +16,7 @@ struct Coordinate: Codable, Hashable {
     var longitude: Double
 }
 
-struct Person: Codable, Hashable {
+struct Person: Codable {
     static func == (lhs: Person, rhs: Person) -> Bool {
         return lhs.id == rhs.id
     }

@@ -13,7 +13,8 @@ public let health = Health()
 public class App {
     let router = Router()
     let cloudEnv = CloudEnv()
-
+    let disasterService = DisasterSocketService()
+    
     public init() throws {
         // Run the metrics initializer
         initializeMetrics(router: router)

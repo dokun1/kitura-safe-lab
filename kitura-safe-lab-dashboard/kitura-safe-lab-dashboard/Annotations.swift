@@ -14,7 +14,7 @@ class PersonAnnotation: NSObject, MKAnnotation {
         self.coordinate = coordinate
         self.person = person
         self.title = person.name
-        self.subtitle = person.status.rawValue
+        self.subtitle = person.status.status
     }
     var coordinate: CLLocationCoordinate2D
     var person: Person?
